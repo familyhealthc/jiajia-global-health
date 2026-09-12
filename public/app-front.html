@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家家健康 App 前台原型 · V3.0（绿色主色 + 实拍对齐）</title>
+<style>
+/*★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  【如何自行修改本原型】—— 不会写代码也能改
+  ─────────────────────────────────────────────
+  ① 用任意文本编辑器打开本文件（推荐 VS Code，免费）
+  ② 找到下面 :root{ ... } 这一段，里面就是"设计参数"
+  ③ 改数字 → 保存 → 回到浏览器按 F5 刷新，立刻生效
+
+  最常改的 5 个参数（改完全站自动同步）：
+    --brand-600   主色（现在是绿色 #16a34a，改成 #2563eb 就变蓝）
+    --radius-card 卡片圆角（18px，想更圆就改 24）
+    --gap-module  模块间距（18px，想更松就改 24）
+    --fs-title    卡片标题字号（15px）
+    --shadow-card 卡片阴影强度
+
+  ⚠️ 注意：只改 :root 里这些"--开头的变量"最安全。
+     不要动其他 CSS 代码，改错了把文件恢复即可。
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★*/
+</style>
+<style>
+:root{
+  --c-primary:var(--brand-600);
+  --c-primary-d:var(--brand-700);
+  --c-primary-l:var(--brand-500);
+  --c-teal:#0d9488;
+  --c-pharma:#0f2b5c;
+  --c-purple:#7c3aed;
+  --c-orange:#ff6b35;
+  --c-gray:#6b7280;
+  --c-bg:#f5f6f8;
+  --shadow:0 2px 8px rgba(15,23,42,.05);
+  --shadow-md:0 10px 26px rgba(15,23,42,.09);
+  --shadow-lg:0 18px 44px rgba(15,23,42,.13);
+  --r-sm:12px;--r-md:18px;--r-lg:24px;
+  /* ===== V3.1 品牌色阶（D 品牌色收敛 · 全站绿色统一引用） ===== */
+  --brand-900:#0f5132;   /* 深绿：头部渐变起点 */
+  --brand-700:#15803d;   /* 深绿：按下态 */
+  --brand-600:#16a34a;   /* 主绿：主色、图标、选中态 */
+  --brand-500:#22c55e;   /* 亮绿：渐变终点 */
+  --brand-400:#4ade80;   /* 浅绿：辅助图形 */
+  --brand-100:#bbf7d0;   /* 浅绿：封面/底纹 */
+  --brand-50:#f0fdf4;    /* 极浅绿：浅底背景 */
+  /* ===== V3.1 大气化设计令牌（A 留白 / B 字号 / C 质感） ===== */
+  --gap-module:18px;      /* 模块间距 原 10px */
+  --gap-card:18px;        /* 卡片内边距 原 14px */
+  --radius-card:18px;     /* 卡片圆角 原 12px */
+  --shadow-card:0 6px 20px rgba(15,23,42,.08);
+  --fs-modtitle:17px;     /* 模块标题 原 15px */
+  --fs-title:15px;        /* 卡片标题 原 13px */
+  --fs-body:12.5px;       /* 正文 原 11px */
+  --fs-aux:11.5px;        /* 辅助信息 原 10.5px */
+  --c-aux:#b0b7c0;        /* 辅助信息色 原 #9ca3af */
+  --h-cover:142px;        /* 推荐课封面 原 120px */
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#e8eaed;color:#1b1b1f;padding-bottom:40px;}
+/* 顶部原型工具条 */
+.pgbar{position:sticky;top:0;z-index:2000;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:12px;padding:10px 24px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.pgbar .brand{font-weight:800;font-size:14px;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.pgbar .brand .m{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--brand-600),var(--brand-500));color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.pgbar .switcher{display:flex;gap:6px;flex:1;flex-wrap:wrap;}
+.pgbar .sw{padding:6px 14px;border-radius:8px;cursor:pointer;font-size:13px;color:#444;border:1px solid transparent;transition:.15s;}
+.pgbar .sw:hover{background:var(--brand-50);color:var(--brand-600);}
+.pgbar .sw.on{background:var(--brand-600);color:#fff;font-weight:600;}
+.pgbar .tips{font-size:12px;color:var(--c-gray);white-space:nowrap;}
+@media(max-width:900px){.pgbar .tips{display:none;}.pgbar{padding:10px 14px;gap:8px;}}
+.back{font-size:12px;color:var(--c-gray);text-decoration:none;display:flex;align-items:center;gap:4px;white-space:nowrap;padding:4px 8px;border-radius:6px;transition:.15s;}
+.back:hover{background:var(--brand-50);color:var(--brand-600);}
+.pg{display:none;}
+.pg.on{display:block;}
+/* 手机框 */
+.phone-wrap{display:flex;justify-content:center;padding:28px 0;}
+.phone{width:390px;height:800px;background:#fff;border-radius:44px;border:10px solid #1b1b1f;box-shadow:0 20px 50px rgba(0,0,0,.25);overflow:hidden;position:relative;}
+.phone .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:26px;background:#1b1b1f;border-radius:0 0 18px 18px;z-index:6;}
+.app-screen{height:100%;overflow-y:auto;background:#f5f6f8;position:relative;}
+.app-screen::-webkit-scrollbar{width:0;}
+
+/* ====== 状态栏 + 导航（对齐实拍白底） ====== */
+.app-statusbar{background:#fff;padding:38px 20px 6px;display:flex;justify-content:space-between;font-size:12px;font-weight:600;position:sticky;top:0;z-index:3;}
+.app-nav{position:sticky;top:0;z-index:4;background:#fff;display:flex;padding:10px 18px;gap:10px;align-items:center;}
+.app-nav .title{flex:1;font-weight:800;font-size:18px;letter-spacing:1px;}
+.app-nav .icon{font-size:20px;color:#333;cursor:pointer;}
+
+/* ====== 顶部 Banner（绿色轻色块 + 圆角） ====== */
+.app-banner{margin:6px 8px 12px;border-radius:var(--radius-card);overflow:hidden;color:#fff;padding:30px 22px 34px;position:relative;
+  background:linear-gradient(135deg,var(--brand-900) 0%,var(--brand-600) 58%,var(--brand-500) 100%);
+  box-shadow:0 10px 30px rgba(15,81,50,.22);}
+/* 光晕装饰：两个半透明圆，营造层次感（纯 CSS，无需图片） */
+.app-banner::before{content:"";position:absolute;right:-40px;top:-50px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);pointer-events:none;}
+.app-banner::after{content:"";position:absolute;left:-30px;bottom:-60px;width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle,rgba(74,222,128,.28),transparent 70%);pointer-events:none;}
+.app-banner h2{font-size:24px;font-weight:800;letter-spacing:1px;position:relative;z-index:2;}
+.app-banner p{font-size:12.5px;opacity:.9;margin-top:8px;position:relative;z-index:2;letter-spacing:.3px;}
+.app-banner .dots{display:flex;gap:6px;margin-top:20px;position:relative;z-index:2;}
+.app-banner .dots span{width:14px;height:4px;border-radius:2px;background:rgba(255,255,255,.4);}
+.app-banner .dots span:first-child{background:#fff;width:22px;}
+
+/* ====== 金刚区（4 列，白底） ====== */
+.jg{background:#fff;margin:0 8px;border-radius:14px;padding:16px 10px 12px;}
+.jg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 8px;}
+.jg-grid .it{text-align:center;cursor:pointer;}
+.jg-grid .it .i{width:46px;height:46px;margin:0 auto;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;
+  background:linear-gradient(135deg,var(--brand-400),var(--brand-600));}
+.jg-grid .it.v2 .i{background:linear-gradient(135deg,#60a5fa,#2563eb);}
+.jg-grid .it.v3 .i{background:linear-gradient(135deg,#fb923c,#f97316);}
+.jg-grid .it.v4 .i{background:linear-gradient(135deg,#fcd34d,#eab308);}
+.jg-grid .it p{font-size:12px;margin-top:6px;color:#333;}
+
+/* ====== 通用模块 ====== */
+.app-sec{background:#fff;margin:var(--gap-module) 8px;border-radius:var(--radius-card);padding:var(--gap-card);box-shadow:var(--shadow-card);}
+.app-sec .sec-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.app-sec .sec-title .t{font-size:var(--fs-modtitle);font-weight:800;color:#0f172a;letter-spacing:.2px;}
+.app-sec .sec-title .t .green{color:var(--brand-600);}
+.app-sec .sec-title .more{font-size:12px;color:var(--c-gray);}
+
+/* ====== 推荐课程（2 列大卡，对齐实拍） ====== */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.rec-card{background:#fff;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);}
+.rec-card .cover{height:var(--h-cover);background:linear-gradient(135deg,#1f2937,#374151);position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;}
+.rec-card .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.35));}
+.rec-card .flag{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;z-index:2;}
+.rec-card .info{padding:8px 10px 10px;}
+.rec-card .nm{font-size:var(--fs-title);font-weight:700;line-height:1.45;height:43px;overflow:hidden;color:#0f172a;letter-spacing:.2px;}
+.rec-card .sub{font-size:var(--fs-aux);color:var(--c-aux);margin-top:6px;}
+.rec-card .row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.rec-card .pr{color:#ff7a45;font-size:19px;font-weight:800;letter-spacing:.3px;}
+.rec-card .pr.free{color:var(--brand-600);}
+.rec-card .learn{font-size:var(--fs-aux);color:var(--c-aux);}
+
+/* ====== 班型模块（2 列大图） ====== */
+.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.class-card{background:#fff;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);}
+.class-card .cover{height:150px;background:linear-gradient(135deg,var(--brand-100),var(--brand-400));display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:800;}
+.class-card .info{padding:14px 16px 16px;}
+.class-card .nm{font-size:var(--fs-title);font-weight:700;line-height:1.45;height:43px;overflow:hidden;letter-spacing:.2px;}
+.class-card .meta{font-size:var(--fs-aux);color:var(--c-aux);margin-top:6px;}
+.class-card .row{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.class-card .pr{color:#ff7a45;font-size:15px;font-weight:800;}
+.class-card .pr.free{color:var(--brand-600);}
+.class-card .learn{font-size:var(--fs-aux);color:var(--c-aux);}
+
+/* ====== 书籍商城（4 列横滑，实拍是 2 列，先用横滑） ====== */
+.book-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;}
+.book-card{flex:0 0 128px;background:#fff;border-radius:var(--radius-card);overflow:hidden;position:relative;box-shadow:var(--shadow-card);}
+.book-card .cover{height:120px;background:linear-gradient(135deg,#fff,#fef3c7);display:flex;align-items:center;justify-content:center;}
+.book-card .book{width:54px;height:74px;background:linear-gradient(135deg,#1c6ef2,#7ab2ff);border-radius:4px 7px 7px 4px;box-shadow:4px 6px 12px rgba(28,110,242,.25);position:relative;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;}
+.book-card .book::after{content:"";position:absolute;left:5px;top:0;bottom:0;width:1.5px;background:rgba(255,255,255,.35);}
+.book-card .flag{position:absolute;top:6px;left:6px;background:#ff6b35;color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;}
+.book-card .info{padding:8px;}
+.book-card .nm{font-size:var(--fs-body);font-weight:600;line-height:1.4;height:34px;overflow:hidden;}
+.book-card .pr{color:#ff7a45;font-size:13px;font-weight:800;margin-top:4px;}
+.book-card .pr.free{color:var(--brand-600);}
+
+/* ====== V3.0 三类主体入驻 tab + 横幅（绿色主色） ====== */
+.join-tabs{display:flex;gap:8px;margin:14px 8px 0;}
+.jt{flex:1;border:1.5px solid #e8ecf1;border-radius:14px;padding:10px 4px;text-align:center;background:#fff;cursor:pointer;transition:.18s;}
+.jt.on{border-color:var(--jc);background:var(--jb);box-shadow:0 6px 16px rgba(22,163,74,.12);}
+.jt .i{font-size:18px;display:block;}
+.jt b{display:block;font-size:12px;margin-top:4px;color:#0f172a;}
+.jt.on b{color:var(--jc);}
+.jt small{display:block;font-size:9.5px;color:var(--c-gray);margin-top:1px;}
+.join-banner{margin:10px 8px 0;background:linear-gradient(135deg,var(--brand-600),var(--brand-500));border-radius:14px;padding:14px;color:#fff;display:flex;align-items:center;justify-content:space-between;}
+.join-banner h4{font-size:14px;font-weight:800;}
+.join-banner p{font-size:10.5px;opacity:.95;margin-top:3px;line-height:1.5;}
+.join-banner .btn{background:#fff;color:var(--brand-600);font-weight:700;padding:7px 14px;border-radius:18px;font-size:12px;flex-shrink:0;}
+
+/* ====== 三个专区横滑卡（绿色为主，紫色辅色区分主体） ====== */
+.app-sec.merchant{background:linear-gradient(180deg,var(--brand-50),#fff 60%);}
+.app-sec.pharma{background:linear-gradient(180deg,#eff6ff,#fff 60%);}
+.app-sec.person{background:linear-gradient(180deg,#faf5ff,#fff 60%);}
+.sp-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;}
+.sp-item{flex:0 0 136px;background:#fff;border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-card);}
+.sp-item .lg{height:54px;background:linear-gradient(135deg,var(--brand-600),var(--brand-500));display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800;}
+.sp-item.merchant .lg{background:linear-gradient(135deg,#0d9488,#14b8a6);}
+.sp-item.pharma .lg{background:linear-gradient(135deg,#0f2b5c,#1e4fa8);}
+.sp-item .cp{font-size:10px;color:var(--brand-600);font-weight:700;padding:6px 8px 0;}
+.sp-item.merchant .cp{color:#0d9488;}
+.sp-item.pharma .cp{color:#1e4fa8;}
+.sp-item .nm{font-size:var(--fs-body);font-weight:600;padding:5px 10px 0;line-height:1.45;height:36px;overflow:hidden;color:#0f172a;}
+.sp-item .pr{font-size:var(--fs-body);color:#ff7a45;font-weight:800;padding:5px 10px 10px;}
+.sp-item .pr.free{color:var(--brand-600);}
+
+/* ====== 公开课 ====== */
+.pub-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pub-card{background:linear-gradient(135deg,#1f2937,#374151);color:#fff;border-radius:12px;overflow:hidden;height:90px;display:flex;align-items:flex-end;padding:10px;font-size:12px;font-weight:600;}
+
+/* ====== 课程详情页（对齐实拍沉浸式大图） ====== */
+.detail-hero{height:220px;background:linear-gradient(135deg,#a7f3d0,var(--brand-600));position:relative;display:flex;align-items:center;justify-content:center;color:#fff;}
+.detail-hero .logo{font-size:48px;font-weight:800;letter-spacing:2px;}
+.detail-hero .share{position:absolute;right:14px;top:46px;color:#fff;font-size:18px;}
+.detail-body{background:#fff;margin:-14px 0 0;border-radius:14px 14px 0 0;padding:16px;position:relative;z-index:2;}
+.detail-body h2{font-size:18px;font-weight:800;line-height:1.4;}
+.detail-price{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.detail-price .pr{color:#ff7a45;font-size:22px;font-weight:800;}
+.detail-price .free{color:var(--brand-600);font-size:20px;font-weight:800;}
+.detail-price .meta{color:#9ca3af;font-size:12px;}
+.detail-tabs{display:flex;gap:18px;margin-top:18px;border-bottom:1px solid #f0f0f0;padding-bottom:8px;}
+.detail-tabs .tb{font-size:14px;color:#9ca3af;padding-bottom:6px;position:relative;font-weight:600;}
+.detail-tabs .tb.on{color:var(--brand-600);}
+.detail-tabs .tb.on::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:3px;border-radius:2px;background:var(--brand-600);}
+.detail-blk{background:#fff;padding:16px;margin-top:8px;}
+.detail-blk h3{font-size:14px;font-weight:700;margin-bottom:8px;}
+.detail-blk p{font-size:12.5px;color:#555;line-height:1.85;}
+.detail-teacher{display:flex;align-items:center;gap:10px;background:#fff;padding:14px 16px;margin-top:8px;}
+.detail-teacher .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fbcfe8,#f472b6);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.detail-teacher .nm{font-size:13px;font-weight:700;}
+.detail-teacher .role{font-size:11px;color:#9ca3af;margin-top:2px;}
+.detail-sub{padding:14px 16px;background:#fff;margin-top:8px;}
+.detail-sub h3{font-size:14px;font-weight:700;margin-bottom:10px;}
+.detail-sub .row{display:flex;gap:10px;align-items:center;background:#fafafa;border-radius:10px;padding:10px;}
+.detail-sub .row .cover{width:50px;height:50px;background:linear-gradient(135deg,#dbeafe,#93c5fd);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.detail-sub .row .info{flex:1;}
+.detail-sub .row .info .nm{font-size:13px;font-weight:700;}
+.detail-sub .row .info .meta{font-size:11px;color:#9ca3af;margin-top:2px;}
+.detail-sub .row .pr{color:#ff7a45;font-weight:800;font-size:14px;}
+.detail-bottom{position:sticky;bottom:0;left:0;right:0;background:#fff;display:flex;align-items:center;padding:10px 12px;border-top:1px solid #f0f0f0;gap:10px;z-index:10;}
+.detail-bottom .ic{text-align:center;font-size:11px;color:#9ca3af;flex-shrink:0;}
+.detail-bottom .ic .e{font-size:18px;display:block;margin-bottom:2px;}
+.detail-bottom .buy{flex:1;background:#ff7a45;color:#fff;border:none;border-radius:22px;padding:11px;font-size:14px;font-weight:700;}
+.detail-bottom .buy.free{background:var(--brand-600);}
+
+/* ====== 底部 tab（3 个：首页/学习/我的，绿色） ====== */
+.app-tabbar{position:sticky;bottom:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 20px;border-top:1px solid #f0f0f0;z-index:5;}
+.app-tabbar .tb{text-align:center;font-size:11px;color:#9ca3af;}
+.app-tabbar .tb.on{color:var(--brand-600);}
+.app-tabbar .tb .i{font-size:22px;display:block;margin-bottom:2px;}
+
+/* ====== 结算页（沿用） ====== */
+.check-form{background:#fff;padding:16px;border-radius:14px;margin:10px;}
+.check-form h3{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.check-form .field{margin-bottom:14px;}
+.check-form label{display:block;font-size:12.5px;color:#555;margin-bottom:6px;font-weight:600;}
+.check-form input,.check-form select{width:100%;border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;font-size:13px;outline:none;}
+.check-form input:focus{border-color:var(--brand-600);}
+.order-box{background:#fff;border-radius:14px;margin:10px;padding:16px;}
+.buy-btn{margin:10px;background:linear-gradient(135deg,#ff7a45,#f97316);color:#fff;border:none;border-radius:24px;padding:14px;font-size:15px;font-weight:700;width:calc(100% - 20px);cursor:pointer;}
+.tag{display:inline-block;background:#fff7ed;color:#ff7a45;font-size:10px;padding:1px 6px;border-radius:5px;margin-left:6px;font-weight:600;border:1px solid #fed7aa;}
+.hint{font-size:10.5px;color:#8a6d1a;background:#fff7e0;border:1px solid #f0dfb0;padding:1px 6px;border-radius:5px;display:inline-block;margin-left:6px;font-weight:400;}
+
+/* ====== 学习页 ====== */
+.learn-head{background:linear-gradient(135deg,var(--brand-900),var(--brand-600) 55%,var(--brand-500));color:#fff;padding:18px 16px 22px;}
+.learn-head h2{font-size:19px;font-weight:800;}
+.learn-head .sub{font-size:11.5px;opacity:.9;margin-top:4px;}
+.learn-cal{background:#fff;border-radius:14px;margin:-14px 8px 0;padding:14px;position:relative;z-index:2;box-shadow:0 6px 18px rgba(15,23,42,.08);}
+.learn-cal .wk{display:flex;justify-content:space-between;margin-bottom:10px;}
+.learn-cal .wk div{flex:1;text-align:center;font-size:11px;color:#9ca3af;}
+.learn-cal .wk div b{display:block;font-size:13px;color:#0f172a;margin-top:4px;font-weight:600;}
+.learn-cal .wk div.today b{color:var(--brand-600);}
+.learn-cal .wk div.done b{color:var(--brand-600);}
+.learn-stat{display:flex;justify-content:space-around;border-top:1px solid #f0f0f0;padding-top:12px;margin-top:4px;}
+.learn-stat .s{text-align:center;}
+.learn-stat .s b{display:block;font-size:17px;font-weight:800;color:var(--brand-600);}
+.learn-stat .s span{font-size:10.5px;color:#9ca3af;}
+.learn-quick{background:#fff;margin:10px 8px;border-radius:14px;padding:14px;}
+.learn-quick h3{font-size:14px;font-weight:800;margin-bottom:12px;}
+.qk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px;}
+.qk-grid .it{text-align:center;}
+.qk-grid .it .i{width:42px;height:42px;margin:0 auto;border-radius:12px;background:var(--brand-50);display:flex;align-items:center;justify-content:center;font-size:19px;}
+.qk-grid .it p{font-size:11px;margin-top:5px;color:#333;}
+.learn-list{background:#fff;margin:10px 8px;border-radius:14px;padding:14px;}
+.learn-list .sec-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.learn-list .sec-title .t{font-size:var(--fs-modtitle);font-weight:800;}
+.learn-list .sec-title .more{font-size:12px;color:var(--c-gray);}
+.li-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f5f5f5;}
+.li-item:last-child{border-bottom:none;}
+.li-item .cover{width:64px;height:48px;border-radius:8px;background:linear-gradient(135deg,var(--brand-100),var(--brand-400));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.li-item .if{flex:1;min-width:0;}
+.li-item .nm{font-size:var(--fs-title);font-weight:600;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.li-item .meta{font-size:var(--fs-aux);color:var(--c-aux);margin-top:5px;}
+.li-item .bar{height:4px;border-radius:2px;background:#f0f0f0;margin-top:7px;overflow:hidden;}
+.li-item .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-600),var(--brand-500));border-radius:2px;}
+.li-item .go{font-size:11px;color:var(--brand-600);font-weight:600;align-self:center;flex-shrink:0;}
+
+/* ====== 我的页 ====== */
+.mine-head{background:linear-gradient(135deg,var(--brand-900),var(--brand-600) 55%,var(--brand-500));color:#fff;padding:20px 16px 46px;}
+.mine-user{display:flex;align-items:center;gap:12px;}
+.mine-user .av{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid rgba(255,255,255,.5);}
+.mine-user .nm{font-size:17px;font-weight:800;}
+.mine-user .id{font-size:11px;opacity:.88;margin-top:3px;}
+.mine-user .lv{display:inline-block;background:rgba(255,255,255,.22);font-size:10px;padding:2px 8px;border-radius:10px;margin-top:5px;}
+.mine-card{background:#fff;border-radius:14px;margin:-32px 8px 0;padding:0;position:relative;z-index:2;overflow:hidden;box-shadow:0 6px 18px rgba(15,23,42,.08);}
+.vip{background:linear-gradient(135deg,#1f2937,#111827 60%,#0f172a);color:#f5d68a;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.vip .l b{font-size:14px;font-weight:800;color:#fde68a;}
+.vip .l span{display:block;font-size:10.5px;color:#cbb87a;margin-top:3px;}
+.vip .btn{background:linear-gradient(135deg,#fde68a,#f5d68a);color:#4a3a12;font-weight:800;font-size:12px;padding:7px 14px;border-radius:16px;}
+.mine-data{display:flex;border-top:1px solid #f5f5f5;}
+.mine-data .d{flex:1;text-align:center;padding:13px 0;border-right:1px solid #f5f5f5;}
+.mine-data .d:last-child{border-right:none;}
+.mine-data .d b{display:block;font-size:16px;font-weight:800;color:#0f172a;}
+.mine-data .d span{font-size:10.5px;color:#9ca3af;}
+.mine-order{background:#fff;margin:10px 8px;border-radius:14px;padding:14px;}
+.mine-order .sec-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.mine-order .sec-title .t{font-size:var(--fs-modtitle);font-weight:800;}
+.mine-order .sec-title .more{font-size:12px;color:var(--c-gray);}
+.od-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 4px;}
+.od-grid .it{text-align:center;position:relative;}
+.od-grid .it .i{font-size:22px;}
+.od-grid .it p{font-size:11px;margin-top:4px;color:#333;}
+.od-grid .it .bdg{position:absolute;top:-4px;right:14px;background:#ff4d4f;color:#fff;font-size:9px;min-width:15px;height:15px;line-height:15px;border-radius:8px;padding:0 4px;}
+.mine-list{background:#fff;margin:10px 8px;border-radius:14px;overflow:hidden;}
+.ml-item{display:flex;align-items:center;gap:12px;padding:16px 16px;border-bottom:1px solid #f5f5f5;font-size:var(--fs-body);}
+.ml-item:last-child{border-bottom:none;}
+.ml-item .i{font-size:18px;width:24px;text-align:center;}
+.ml-item .nm{flex:1;}
+.ml-item .ar{color:#cbd5e1;font-size:13px;}
+.ml-item .val{font-size:12px;color:#9ca3af;margin-right:4px;}
+
+/* ====== 三类主体注册页 ====== */
+.reg-head{background:linear-gradient(135deg,var(--brand-900),var(--brand-600) 55%,var(--brand-500));color:#fff;padding:16px 16px 26px;}
+.reg-head h2{font-size:18px;font-weight:800;}
+.reg-head p{font-size:11.5px;opacity:.92;margin-top:4px;}
+.reg-body{background:#fff;margin:-16px 8px 0;border-radius:14px;padding:16px;position:relative;z-index:2;box-shadow:0 6px 18px rgba(15,23,42,.08);}
+.reg-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.rt{flex:1;border:1.5px solid #e8ecf1;border-radius:12px;padding:10px 4px;text-align:center;background:#fff;cursor:pointer;transition:.18s;}
+.rt.on{border-color:var(--jc);background:var(--jb);box-shadow:0 6px 16px rgba(15,23,42,.08);}
+.rt .i{font-size:17px;display:block;}
+.rt b{display:block;font-size:12px;margin-top:4px;color:#0f172a;}
+.rt.on b{color:var(--jc);}
+.rt small{display:block;font-size:9.5px;color:var(--c-gray);margin-top:1px;}
+.rf{margin-bottom:14px;display:none;}
+.rf.on{display:block;}
+.rf label{display:block;font-size:12.5px;color:#374151;margin-bottom:6px;font-weight:600;}
+.rf label .req{color:#ff4d4f;margin-right:3px;}
+.rf label .opt{color:#9ca3af;font-weight:400;font-size:11px;}
+.rf input,.rf select,.rf textarea{width:100%;border:1px solid #e5e7eb;border-radius:9px;padding:10px 12px;font-size:13px;outline:none;font-family:inherit;background:#fff;}
+.rf input:focus,.rf select:focus,.rf textarea:focus{border-color:var(--brand-600);}
+.rf .row2{display:flex;gap:8px;}
+.rf .row2 input{flex:1;}
+.rf .row2 .btn{flex:0 0 100px;background:var(--brand-50);border:1px solid var(--brand-600);color:var(--brand-600);border-radius:9px;font-size:12px;font-weight:600;padding:10px 0;cursor:pointer;}
+.rf .up{border:1.5px dashed #d1d5db;border-radius:10px;padding:14px;text-align:center;color:#9ca3af;font-size:12px;background:#fafafa;cursor:pointer;}
+.rf .up b{display:block;color:var(--brand-600);font-size:12px;margin-bottom:3px;}
+.rf .tip{font-size:10.5px;color:#9ca3af;margin-top:5px;line-height:1.5;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chips span{border:1px solid #e5e7eb;border-radius:14px;padding:5px 11px;font-size:11.5px;color:#555;cursor:pointer;}
+.chips span.on{background:var(--brand-50);border-color:var(--brand-600);color:var(--brand-600);font-weight:600;}
+.reg-notice{background:#fff7e0;border:1px solid #f0dfb0;border-radius:10px;padding:10px 12px;font-size:10.5px;color:#8a6d1a;line-height:1.6;margin-bottom:14px;}
+.reg-submit{width:100%;background:linear-gradient(135deg,#ff7a45,#f97316);color:#fff;border:none;border-radius:24px;padding:14px;font-size:15px;font-weight:700;margin-top:6px;cursor:pointer;}
+.reg-foot{text-align:center;font-size:10.5px;color:#9ca3af;margin:10px 0 20px;line-height:1.6;}
+.reg-ok{display:none;text-align:center;padding:40px 20px;}
+.reg-ok.on{display:block;}
+.reg-ok .ic{font-size:52px;}
+.reg-ok h3{font-size:16px;font-weight:800;margin-top:14px;}
+.reg-ok p{font-size:12.5px;color:#6b7280;margin-top:8px;line-height:1.7;}
+
+/* ====== App 视频组件（APP-03） ====== */
+.app-video{background:#fff;margin:0 8px 10px;border-radius:18px;padding:14px;box-shadow:0 6px 20px rgba(15,23,42,.06);}
+.app-video .vt{font-size:14.5px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:6px;}
+.app-video .vt .ic{font-size:16px;}
+.app-video .vt span{font-size:11.5px;color:#9ca3af;font-weight:400;margin-left:6px;}
+.app-video .player{height:170px;background:linear-gradient(135deg,#0b0f19 0%,#1a1f3a 50%,#2a2350 100%);border-radius:14px;margin-top:12px;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;overflow:hidden;cursor:pointer;}
+.app-video .player::after{content:"";position:absolute;left:12px;bottom:12px;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:14px solid #fff;opacity:.85;}
+.app-video .player .play{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:#7c3aed;font-size:22px;box-shadow:0 6px 20px rgba(0,0,0,.3);position:relative;z-index:2;}
+.app-video .player .play::after{content:"";border-left:14px solid #7c3aed;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px;}
+.app-video .player .tag{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.55);color:#fff;font-size:10.5px;padding:3px 9px;border-radius:5px;z-index:3;backdrop-filter:blur(4px);}
+.app-video .player .live{position:absolute;right:14px;top:14px;background:rgba(22,163,74,.92);color:#fff;font-size:10px;padding:3px 8px;border-radius:5px;display:flex;align-items:center;gap:4px;z-index:3;}
+.app-video .player .live::before{content:"";width:5px;height:5px;background:#fff;border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.app-video .player .autoplay{position:absolute;right:14px;bottom:14px;background:rgba(0,0,0,.45);color:rgba(255,255,255,.85);font-size:10px;padding:2px 7px;border-radius:4px;z-index:3;}
+
+
+/* ====== V3.1 微交互（F） ====== */
+/* 卡片按下反馈 */
+.rec-card,.class-card,.book-card,.sp-item,.learn-quick .it,.ml-item,.li-item,.mine-order .it,.qk-grid .it{
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.rec-card:active,.class-card:active,.book-card:active,.sp-item:active{transform:scale(.975);box-shadow:0 3px 10px rgba(15,23,42,.10);}
+.ml-item:active,.li-item:active{background:#fafbfc;}
+/* 金刚区 / 工具区图标点击缩放 */
+.jg-grid .it,.qk-grid .it,.mine-order .it{cursor:pointer;}
+.jg-grid .it:active .i,.qk-grid .it:active .i,.mine-order .it:active .i{transform:scale(.9);}
+.jg-grid .it .i,.qk-grid .it .i,.mine-order .it .i{transition:transform .16s ease;}
+/* 按钮按下 */
+.reg-submit:active,.buy-btn:active,.detail-bottom .buy:active,.join-banner .btn:active{transform:scale(.98);filter:brightness(.95);}
+.reg-submit,.buy-btn,.detail-bottom .buy,.join-banner .btn{transition:transform .14s ease, filter .14s ease;}
+/* 专区横滑吸附（滑动时自动对齐卡片） */
+.sp-row,.book-row,.app-course-row,.mc-row,.ph-row{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
+.sp-item,.book-card,.app-course,.mc-item,.ph-item{scroll-snap-align:start;}
+/* tabbar / tab 切换更顺滑 */
+.app-tabbar .tb,.jt,.rt,.chips span{transition:color .18s ease, background .18s ease, border-color .18s ease, transform .16s ease;}
+.app-tabbar .tb:active{transform:scale(.92);}
+/* 专区卡悬浮（桌面预览时） */
+@media(hover:hover){
+  .rec-card:hover,.class-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(15,23,42,.13);}
+  .sp-item:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,23,42,.12);}
+}
+
+</style>
+<style>
+/* 网站嵌入版：仅保留手机与手机屏幕内容，隐藏原型制作工具栏。 */
+html,body{width:100%!important;height:100%!important;overflow:hidden!important;background:transparent!important;}
+body{padding:0!important;}
+.pgbar{display:none!important;}
+.phone-wrap{min-height:100vh!important;padding:0!important;align-items:flex-start!important;}
+.phone{width:min(390px,100vw)!important;height:min(800px,100vh)!important;box-shadow:none!important;}
+@media(max-width:389px){
+  .phone{width:100vw!important;height:100vh!important;border:0!important;border-radius:0!important;}
+  .phone .notch{display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="pgbar">
+  <a class="back" href="/#foundation">← 返回国际平台</a>
+  <div class="brand"><span class="m">A</span>App 前台（微网校）</div>
+  <div class="switcher">
+    <div class="sw on" data-pg="home">App 首页</div>
+    <div class="sw" data-pg="bookdetail">书籍课程详情<span style="font-size:10px;opacity:.7;">（简介+价格）</span></div>
+    <div class="sw" data-pg="register">三类主体注册页</div>
+    <div class="sw" data-pg="learn">学习</div>
+    <div class="sw" data-pg="mine">我的</div>
+    <div class="sw" data-pg="checkout">购买结算页</div>
+  </div>
+  <div class="tips">手机端高保真原型 · 点击标签切换</div>
+</div>
+
+<!-- ===== App 首页 ===== -->
+<div class="pg on" id="home">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="app-nav"><span class="title">家家健康研修院</span><span class="icon">🔍</span><span class="icon">💬</span></div>
+
+      <!-- 顶部绿色 Banner -->
+      <div class="app-banner">
+        <h2>家家健康研修院</h2>
+        <p>考试考证 · 合规培训 · 健康论坛</p>
+        <div class="dots"><span></span><span></span><span></span></div>
+      </div>
+
+      <!-- 4 列金刚区（包含三类主体入驻入口） -->
+      <div class="jg">
+        <div class="jg-grid">
+          <div class="it"><div class="i">🎓</div><p>班级</p></div>
+          <div class="it v2"><div class="i">▶</div><p>自研课程</p></div>
+          <div class="it v3"><div class="i">🔥</div><p>健康峰会论坛</p></div>
+          <div class="it v4 jg-join" data-join="person"><div class="i">🏪</div><p>我要入驻</p></div>
+        </div>
+      </div>
+
+      <!-- V2.0 / APP-03 视频组件（保留 · 实拍已确认无视频区但 PRD 5.6 明确要求，故恢复） -->
+      <div class="app-video">
+        <div class="vt"><span class="ic">📹</span>名师讲堂<span>副标题 · 本期：医保飞检合规</span></div>
+        <div class="player" title="点击播放视频">
+          <div class="play"></div>
+          <span class="tag">点击播放 · 12:36</span>
+          <span class="live">自动播放</span>
+        </div>
+      </div>
+
+      <!-- 推荐课程（2 列大卡，对齐实拍） -->
+      <div class="app-sec">
+        <div class="sec-title"><div class="t">推荐课程</div><span class="more">全部 ›</span></div>
+        <div class="rec-grid">
+          <div class="rec-card">
+            <div class="cover">♟️<span class="flag">会员免费</span></div>
+            <div class="info">
+              <div class="nm">文化非虚，反哺为实：人与企业的互…</div>
+              <div class="sub">默认计划</div>
+              <div class="row"><span class="pr">299.00元</span><span class="learn">150人在学</span></div>
+            </div>
+          </div>
+          <div class="rec-card">
+            <div class="cover">📚<span class="flag">4K臻享</span></div>
+            <div class="info">
+              <div class="nm">向解放军学管理</div>
+              <div class="sub">默认计划</div>
+              <div class="row"><span class="pr">198.00元</span><span class="learn">153人在学</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 班型模块（2 列大图，对齐实拍） -->
+      <div class="app-sec">
+        <div class="sec-title"><div class="t">推荐班型</div><span class="more">全部 ›</span></div>
+        <div class="class-grid">
+          <div class="class-card">
+            <div class="cover">🏛️</div>
+            <div class="info">
+              <div class="nm">新员工培训-仅内部培训</div>
+              <div class="meta">共1门课程</div>
+              <div class="row"><span class="pr">999.99元</span><span class="learn">16人在学</span></div>
+            </div>
+          </div>
+          <div class="class-card">
+            <div class="cover" style="background:linear-gradient(135deg,#bfdbfe,#3b82f6);">🌿</div>
+            <div class="info">
+              <div class="nm">中医专长护理特训班</div>
+              <div class="meta">共1门课程</div>
+              <div class="row"><span class="pr">1980.00元</span><span class="learn">37人在学</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 书籍商城 -->
+      <div class="app-sec">
+        <div class="sec-title"><div class="t">📖 书籍商城</div><span class="more">查看全部 ›</span></div>
+        <div class="book-row">
+          <div class="book-card"><div class="cover"><div class="book">📗</div></div><span class="flag">实体书</span><div class="info"><div class="nm">检验科合规收费指南</div><div class="pr">¥68</div></div></div>
+          <div class="book-card"><div class="cover"><div class="book">📘</div></div><span class="flag">实体书</span><div class="info"><div class="nm">DRG付费实操手册</div><div class="pr">¥96</div></div></div>
+          <div class="book-card"><div class="cover"><div class="book">📕</div></div><span class="flag">实体书</span><div class="info"><div class="nm">医保飞检合规红宝书</div><div class="pr">¥52</div></div></div>
+          <div class="book-card"><div class="cover"><div class="book">📙</div></div><span class="flag">实体书</span><div class="info"><div class="nm">药房高风险应对</div><div class="pr free">免费</div></div></div>
+        </div>
+      </div>
+
+      <!-- V3.0 三类主体入驻入口（APP-05 / APP-07） -->
+      <div class="join-tabs">
+        <div class="jt on" data-join="person" style="--jc:#7c3aed;--jb:#faf5ff"><span class="i">🎓</span><b>个人</b><small>讲师 / 教授</small></div>
+        <div class="jt" data-join="merchant" style="--jc:#0d9488;--jb:#ecfdf5"><span class="i">🏪</span><b>商家</b><small>企业机构</small></div>
+        <div class="jt" data-join="pharma" style="--jc:#0f2b5c;--jb:#eff6ff"><span class="i">🏢</span><b>药企</b><small>制药企业</small></div>
+      </div>
+      <div class="join-banner" id="joinBanner">
+        <div>
+          <h4 id="joinTitle">🎓 个人入驻 · 讲师 / 教授</h4>
+          <p id="joinDesc">注册 → 平台认证 → 创建课程 → 审核发布</p>
+        </div>
+        <span class="btn" id="joinBtn">立即入驻 ›</span>
+      </div>
+
+      <!-- V3.0 个人讲师课程模块（紫色辅色） -->
+      <div class="app-sec person">
+        <div class="sec-title"><div class="t">🎓 个人讲师课程</div><span class="more">更多 ›</span></div>
+        <div class="sp-row">
+          <div class="sp-item"><div class="lg">王</div><div class="cp">王教授 · 已认证</div><div class="nm">临床药师规范化培训</div><div class="pr">¥199</div></div>
+          <div class="sp-item"><div class="lg">李</div><div class="cp">李讲师 · 已认证</div><div class="nm">慢病管理联合用药</div><div class="pr">¥129</div></div>
+          <div class="sp-item"><div class="lg">张</div><div class="cp">张讲师 · 已认证</div><div class="nm">器械GSP规范解读</div><div class="pr">¥99</div></div>
+        </div>
+      </div>
+
+      <!-- V3.0 商家/机构课程专区（绿色辅色，区分个人讲师） -->
+      <div class="app-sec merchant">
+        <div class="sec-title"><div class="t">🏪 商家 / 机构课程</div><span class="more">更多 ›</span></div>
+        <div class="sp-row">
+          <div class="sp-item merchant"><div class="lg">百</div><div class="cp">百姓康大药房</div><div class="nm">门店慢病服务实操</div><div class="pr">¥299</div></div>
+          <div class="sp-item merchant"><div class="lg">康</div><div class="cp">康明培训学校</div><div class="nm">执业药师冲刺班</div><div class="pr">¥899</div></div>
+          <div class="sp-item merchant"><div class="lg">一</div><div class="cp">一心堂商学院</div><div class="nm">店长管理与带教</div><div class="pr">¥459</div></div>
+          <div class="sp-item merchant"><div class="lg">G</div><div class="cp">GSP 研修院</div><div class="nm">药品经营规范通识</div><div class="pr free">免费</div></div>
+        </div>
+      </div>
+
+      <!-- V3.0 药企专区（深蓝紫辅色，区分商家） -->
+      <div class="app-sec pharma">
+        <div class="sec-title"><div class="t">🏢 药企专区</div><span class="more">更多 ›</span></div>
+        <div class="sp-row">
+          <div class="sp-item pharma"><div class="lg">扬</div><div class="cp">扬子江药业</div><div class="nm">基层合理用药提升</div><div class="pr free">免费</div></div>
+          <div class="sp-item pharma"><div class="lg">恒</div><div class="cp">恒瑞医药</div><div class="nm">肿瘤药品合理应用</div><div class="pr">¥99</div></div>
+          <div class="sp-item pharma"><div class="lg">云</div><div class="cp">云南白药</div><div class="nm">中成药说明书合规</div><div class="pr free">免费</div></div>
+        </div>
+        <p style="font-size:10px;color:#94a3b8;margin-top:8px;">价格由课程创建方设定 · 内容均须通过统一人工审核 · 不做药品销售</p>
+      </div>
+
+      <!-- 公开课 -->
+      <div class="app-sec">
+        <div class="sec-title"><div class="t">🎬 公开课</div><span class="more">更多 ›</span></div>
+        <div class="pub-row">
+          <div class="pub-card">健康产业峰会直播</div>
+          <div class="pub-card" style="background:linear-gradient(135deg,#0f172a,#1e3a8a);">医保政策新规解读</div>
+        </div>
+      </div>
+
+      <!-- 3 个底部 tab -->
+      <div class="app-tabbar">
+        <div class="tb on"><span class="i">🏠</span>首页</div>
+        <div class="tb"><span class="i">▶</span>学习</div>
+        <div class="tb"><span class="i">👤</span>我的</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== App 书籍类课程详情页（精简版 · APP-04-02/03 改造对象） ===== -->
+<div class="pg" id="bookdetail">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="app-nav"><span class="icon">‹</span><span class="title" style="visibility:hidden;">书</span><span class="icon" style="color:#fff;position:absolute;right:18px;top:48px;">↗</span></div>
+
+      <!-- 书籍封面头（轻色块，非课程沉浸式） -->
+      <div class="detail-hero" style="height:200px;background:linear-gradient(135deg,#fef3c7,#fde68a);">
+        <div style="width:110px;height:150px;background:linear-gradient(135deg,#1c6ef2,#7ab2ff);border-radius:6px 10px 10px 6px;box-shadow:6px 10px 22px rgba(28,110,242,.3);display:flex;align-items:center;justify-content:center;font-size:44px;position:relative;">
+          📗
+          <span style="position:absolute;left:8px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.4);"></span>
+        </div>
+        <div class="share" style="position:absolute;right:14px;top:48px;color:#333;">↗</div>
+      </div>
+
+      <div class="detail-body">
+        <h2>检验科项目合规收费与风险防范 <span class="tag" style="vertical-align:middle;">实体书籍</span></h2>
+        <div class="detail-price">
+          <span class="pr">¥68</span>
+          <span class="meta" style="text-decoration:line-through;">¥88</span>
+          <span class="meta">👤 1286 人已学</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;font-size:11px;color:#9ca3af;">
+          <span>📦 含实体书籍 1 本</span><span>🚚 包邮</span><span>⏱ 长期有效</span>
+        </div>
+      </div>
+
+      <!-- ① 仅保留「简介」（APP-04-02：去掉除简介外的其他相关内容） -->
+      <div class="detail-blk">
+        <h3>简介</h3>
+        <p>系统梳理检验科收费合规要点、风险防范与典型场景，配套实体书籍一本，助你建立合规认知与实操能力。涵盖医保飞检高频问题、DRG 付费分组、处方点评等核心模块，适合检验科、医保办、药学部人员学习。</p>
+      </div>
+      <div style="background:#fff8e6;border:1px solid #f0dfb0;border-radius:10px;margin:8px 0;padding:10px 12px;font-size:11px;color:#8a6d1a;line-height:1.6;">
+        ⚠️ <b>精简说明（客户 2026-09-09 确认）</b>：书籍课程详情页内容<b>仅保留「简介」「价格」与「猜你想买」</b>，已去掉教师、题库、目录、评价、学习有效期等其他所有模块。</div>
+
+      <!-- 「猜你想买」推荐位（APP-04-03：原「猜你想学」改版 · 按购买量排序，客户 2026-09-09 确认保留） -->
+      <div class="detail-sub">
+        <h3>🎯 猜你想买 <span style="font-size:10px;color:#9ca3af;font-weight:400;">（原「猜你想学」· 按购买量排序）</span></h3>
+        <div class="book-row">
+          <div class="book-card"><div class="cover"><div class="book">📘</div></div><div class="info"><div class="nm">DRG付费实操手册</div><div class="pr">¥96</div></div></div>
+          <div class="book-card"><div class="cover"><div class="book">📕</div></div><div class="info"><div class="nm">医保飞检合规红宝书</div><div class="pr">¥52</div></div></div>
+          <div class="book-card"><div class="cover"><div class="book">📙</div></div><div class="info"><div class="nm">药房高风险应对</div><div class="pr free">免费</div></div></div>
+        </div>
+      </div>
+      <div style="height:80px;"></div>
+      <div class="detail-bottom">
+        <div class="ic"><span class="e">🛒</span>购物车</div>
+        <div class="ic"><span class="e">♡</span>收藏</div>
+        <button class="buy">立即购买</button>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+
+<!-- ===== App 三类主体注册页（APP-05-02 / 5.4.6 字段清单） ===== -->
+<div class="pg" id="register">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="reg-head">
+        <h2>入驻申请</h2>
+        <p>请选择主体类型并填写对应资料，提交后等待平台审核</p>
+      </div>
+
+      <div class="reg-body">
+        <!-- 主体类型切换 -->
+        <div class="reg-tabs">
+          <div class="rt on" data-type="person" style="--jc:#7c3aed;--jb:#faf5ff"><span class="i">🎓</span><b>个人</b><small>讲师 / 教授</small></div>
+          <div class="rt" data-type="merchant" style="--jc:#0d9488;--jb:#ecfdf5"><span class="i">🏪</span><b>商家</b><small>企业机构</small></div>
+          <div class="rt" data-type="pharma" style="--jc:#0f2b5c;--jb:#eff6ff"><span class="i">🏢</span><b>药企</b><small>制药企业 / MAH</small></div>
+        </div>
+
+        <!-- ===== 个人主体 ===== -->
+        <div class="rf on" data-f="person">
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>姓名</label>
+            <input placeholder="请输入真实姓名">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>手机号 <span class="opt">（登录账号）</span></label>
+            <div class="row2"><input placeholder="请输入手机号"><button class="btn">获取验证码</button></div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>身份类型</label>
+            <select><option>教授</option><option>讲师</option><option>外部专家</option></select>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>擅长领域 <span class="opt">（可多选）</span></label>
+            <div class="chips">
+              <span class="on">药学服务</span><span>医保合规</span><span>器械监管</span><span>门店运营</span><span>中医药膳</span>
+            </div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>资质证明</label>
+            <div class="up"><b>＋ 点击上传</b>pdf / jpg / zip，单个 ≤10MB</div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label>个人简介 <span class="opt">（选填，500 字内，用于前台讲师展示）</span></label>
+            <textarea rows="3" placeholder="请简要介绍您的专业背景与授课方向"></textarea>
+          </div>
+        </div>
+
+        <!-- ===== 商家主体 ===== -->
+        <div class="rf" data-f="merchant">
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>企业名称 <span class="opt">（须与营业执照一致）</span></label>
+            <input placeholder="请输入营业执照上的企业名称">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>统一社会信用代码</label>
+            <input placeholder="18 位">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>联系人姓名</label>
+            <input placeholder="请输入对接人姓名">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>联系人手机号 <span class="opt">（登录账号）</span></label>
+            <div class="row2"><input placeholder="请输入手机号"><button class="btn">获取验证码</button></div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>经营类目</label>
+            <select><option>连锁药店</option><option>培训机构</option><option>药房联盟</option><option>其他</option></select>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>营业执照</label>
+            <div class="up"><b>＋ 点击上传</b>pdf / jpg，单个 ≤10MB</div>
+          </div>
+        </div>
+
+        <!-- ===== 药企主体 ===== -->
+        <div class="rf" data-f="pharma">
+          <div class="reg-notice">
+            ⚠️ <b>合规提示：</b>药企发布内容须符合《药品管理法》《广告法》相关规定，<b>禁止在平台发布任何药品销售信息</b>。资质仅作上传备查，平台本期不做实质核验，相关法律责任由入驻方自行承担。
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>企业名称 <span class="opt">（须与许可证一致）</span></label>
+            <input placeholder="请输入许可证上的企业名称">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>统一社会信用代码</label>
+            <input placeholder="18 位">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>联系人姓名 <span class="opt">（医学部 / 培训部）</span></label>
+            <input placeholder="请输入对接人姓名">
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>联系人手机号 <span class="opt">（登录账号）</span></label>
+            <div class="row2"><input placeholder="请输入手机号"><button class="btn">获取验证码</button></div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>企业类型</label>
+            <select><option>制药工业</option><option>MAH</option><option>中药饮片</option><option>其他</option></select>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>药品生产许可证</label>
+            <div class="up"><b>＋ 点击上传</b>pdf / jpg，单个 ≤10MB</div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label>GMP 证书 / MAH 批件 <span class="opt">（选填，用于增强背书）</span></label>
+            <div class="up"><b>＋ 点击上传</b>pdf / jpg，单个 ≤10MB</div>
+          </div>
+          <div class="rf" style="display:block;">
+            <label><span class="req">*</span>内容方向</label>
+            <div class="chips">
+              <span class="on">合理用药</span><span>临床进展</span><span>疾病管理</span><span>产品培训</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="reg-submit" id="regSubmit">提交个人入驻申请</button>
+        <div class="reg-foot">提交即表示同意《入驻协议》与《内容合规承诺函》<br>审核结果将通过短信通知联系人</div>
+      </div>
+
+      <!-- 提交成功态 -->
+      <div class="reg-ok" id="regOk">
+        <div class="ic">✅</div>
+        <h3>提交成功</h3>
+        <p>您的入驻申请已提交，平台将在 <b>1-3 个工作日</b>内完成审核。<br>审核结果将通过短信通知，请留意查收。</p>
+      </div>
+
+      <div class="app-tabbar">
+        <div class="tb on"><span class="i">🏠</span>首页</div>
+        <div class="tb"><span class="i">▶</span>学习</div>
+        <div class="tb"><span class="i">👤</span>我的</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== App 学习页 ===== -->
+<div class="pg" id="learn">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="learn-head">
+        <h2>学习</h2>
+        <div class="sub">坚持学习，每天进步一点点</div>
+      </div>
+
+      <!-- 学习日历 / 打卡 -->
+      <div class="learn-cal">
+        <div class="wk">
+          <div>一<b>12</b></div>
+          <div>二<b>13</b></div>
+          <div>三<b>14</b></div>
+          <div class="today">四<b>15</b></div>
+          <div>五<b>16</b></div>
+          <div>六<b>17</b></div>
+          <div>日<b>18</b></div>
+        </div>
+        <div class="learn-stat">
+          <div class="s"><b>28</b><span>连续打卡(天)</span></div>
+          <div class="s"><b>6.5</b><span>今日学习(h)</span></div>
+          <div class="s"><b>126</b><span>累计学时</span></div>
+        </div>
+      </div>
+
+      <!-- 快捷入口 -->
+      <div class="learn-quick">
+        <h3>学习工具</h3>
+        <div class="qk-grid">
+          <div class="it"><div class="i">❌</div><p>错题记录</p></div>
+          <div class="it"><div class="i">❓</div><p>我的问答</p></div>
+          <div class="it"><div class="i">♡</div><p>我的收藏</p></div>
+          <div class="it"><div class="i">📝</div><p>学习笔记</p></div>
+          <div class="it"><div class="i">📊</div><p>学习报告</p></div>
+          <div class="it"><div class="i">🏆</div><p>我的证书</p></div>
+          <div class="it"><div class="i">📥</div><p>离线缓存</p></div>
+          <div class="it"><div class="i">📅</div><p>学习日历</p></div>
+        </div>
+      </div>
+
+      <!-- 历史学习 / 在学课程 -->
+      <div class="learn-list">
+        <div class="sec-title"><div class="t">历史学习</div><span class="more">全部 ›</span></div>
+        <div class="li-item">
+          <div class="cover">📗</div>
+          <div class="if">
+            <div class="nm">检验科项目合规收费与风险防范</div>
+            <div class="meta">学到 第3章 · 医保飞检要点</div>
+            <div class="bar"><i style="width:62%"></i></div>
+          </div>
+          <div class="go">继续</div>
+        </div>
+        <div class="li-item">
+          <div class="cover" style="background:linear-gradient(135deg,#bfdbfe,#3b82f6);">🎓</div>
+          <div class="if">
+            <div class="nm">临床药师规范化培训</div>
+            <div class="meta">学到 第1章 · 药师职责</div>
+            <div class="bar"><i style="width:28%"></i></div>
+          </div>
+          <div class="go">继续</div>
+        </div>
+        <div class="li-item">
+          <div class="cover" style="background:linear-gradient(135deg,#fde68a,#f59e0b);">💊</div>
+          <div class="if">
+            <div class="nm">DRG付费分组方案解读</div>
+            <div class="meta">已学完 · 共12章</div>
+            <div class="bar"><i style="width:100%"></i></div>
+          </div>
+          <div class="go" style="color:#9ca3af;">已完成</div>
+        </div>
+      </div>
+
+      <div class="app-tabbar">
+        <div class="tb"><span class="i">🏠</span>首页</div>
+        <div class="tb on"><span class="i">▶</span>学习</div>
+        <div class="tb"><span class="i">👤</span>我的</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== App 我的页 ===== -->
+<div class="pg" id="mine">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="mine-head">
+        <div class="mine-user">
+          <div class="av">👤</div>
+          <div>
+            <div class="nm">张同学</div>
+            <div class="id">ID: 8823**** · 已实名</div>
+            <span class="lv">🎓 初级学员</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIP 黑卡 -->
+      <div class="mine-card">
+        <div class="vip">
+          <div class="l">
+            <b>👑 研修院 VIP 会员</b>
+            <span>开通畅学全站课程 · 专享书籍折扣</span>
+          </div>
+          <div class="btn">立即开通</div>
+        </div>
+        <div class="mine-data">
+          <div class="d"><b>128</b><span>学习币</span></div>
+          <div class="d"><b>6</b><span>优惠券</span></div>
+          <div class="d"><b>2,340</b><span>积分</span></div>
+          <div class="d"><b>16</b><span>已购课程</span></div>
+        </div>
+      </div>
+
+      <!-- 我的订单 -->
+      <div class="mine-order">
+        <div class="sec-title"><div class="t">我的订单</div><span class="more">全部订单 ›</span></div>
+        <div class="od-grid">
+          <div class="it"><div class="i">💳</div><p>待付款</p><span class="bdg">2</span></div>
+          <div class="it"><div class="i">📦</div><p>待发货</p></div>
+          <div class="it"><div class="i">🚚</div><p>待收货</p></div>
+          <div class="it"><div class="i">✅</div><p>已完成</p></div>
+        </div>
+      </div>
+
+      <!-- 功能列表 -->
+      <div class="mine-list">
+        <div class="ml-item"><span class="i">📚</span><span class="nm">我的课程</span><span class="val">16门</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">🏫</span><span class="nm">我的班级</span><span class="val">2个</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">📝</span><span class="nm">我的考试</span><span class="val">3场</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">🏆</span><span class="nm">我的证书</span><span class="val">5张</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">📄</span><span class="nm">我的合同</span><span class="val">1份</span><span class="ar">›</span></div>
+      </div>
+      <div class="mine-list">
+        <div class="ml-item"><span class="i">📥</span><span class="nm">离线缓存</span><span class="val">2.1GB</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">📍</span><span class="nm">收货地址</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">🎧</span><span class="nm">联系客服</span><span class="ar">›</span></div>
+        <div class="ml-item"><span class="i">⚙️</span><span class="nm">设置</span><span class="ar">›</span></div>
+      </div>
+
+      <div class="app-tabbar">
+        <div class="tb"><span class="i">🏠</span>首页</div>
+        <div class="tb"><span class="i">▶</span>学习</div>
+        <div class="tb on"><span class="i">👤</span>我的</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== App 购买结算页 ===== -->
+<div class="pg" id="checkout">
+  <div class="phone-wrap"><div class="phone"><div class="notch"></div>
+    <div class="app-screen">
+      <div class="app-statusbar"><span>9:13</span><span>📶 🔋</span></div>
+      <div class="app-nav"><span class="icon">‹</span><div class="title">确认订单</div><span class="icon"></span></div>
+      <div class="check-form">
+        <h3>📦 收货地址 <span class="hint">实体书籍需填写</span></h3>
+        <div class="field"><label>收货人 *</label><input value="张三" placeholder="请输入收货人"></div>
+        <div class="field"><label>联系电话 *</label><input value="138****8888" placeholder="请输入手机号"></div>
+        <div class="field"><label>所在地区 *</label><select><option>浙江省 / 杭州市 / 余杭区</option></select></div>
+        <div class="field"><label>详细地址 *</label><input placeholder="街道、门牌号等"></div>
+      </div>
+      <div class="order-box">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;">商品信息</h3>
+        <div style="display:flex;gap:12px;align-items:center;background:#fafbfc;border-radius:10px;padding:12px;">
+          <div style="width:52px;height:68px;border-radius:6px;background:linear-gradient(135deg,#1c6ef2,#7ab2ff);display:flex;align-items:center;justify-content:center;font-size:24px;">📗</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:700;">检验科项目合规收费 <span class="tag">实体书籍</span></div><div style="font-size:11px;color:#999;margin-top:4px;">1件 · 含书籍1本</div></div>
+          <div style="color:#ff7a45;font-weight:800;font-size:15px;">¥68</div>
+        </div>
+      </div>
+      <div class="order-box">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#555;margin-bottom:10px;"><span>商品金额</span><span>¥68</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#555;margin-bottom:10px;"><span>运费</span><span style="color:var(--brand-600);font-weight:600;">包邮</span></div>
+        <div style="border-top:1px dashed #ddd;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:600;">应付合计</span><span style="color:#ff7a45;font-size:24px;font-weight:800;">¥68</span>
+        </div>
+      </div>
+      <button class="buy-btn">提交订单并支付</button>
+      <p style="text-align:center;font-size:11px;color:#999;margin:6px 10px 16px;">提交即表示同意《购买协议》，书籍由商家线下邮寄</p>
+      <div class="app-tabbar">
+        <div class="tb on"><span class="i">🏠</span>首页</div>
+        <div class="tb"><span class="i">▶</span>学习</div>
+        <div class="tb"><span class="i">👤</span>我的</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<script>
+document.querySelectorAll('.switcher .sw').forEach(sw=>{
+  sw.addEventListener('click',()=>{
+    document.querySelectorAll('.switcher .sw').forEach(s=>s.classList.remove('on'));
+    sw.classList.add('on');
+    document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+    document.getElementById(sw.dataset.pg).classList.add('on');
+  });
+});
+/* V3.0 三类主体入驻切换（APP-05 / APP-07） */
+(function(){
+  var JOIN = {
+    person:   {t:'🎓 个人入驻 · 讲师 / 教授', d:'注册 → 平台认证 → 创建课程 → 审核发布', b:'立即入驻 ›'},
+    merchant: {t:'🏪 商家入驻 · 连锁药店 / 培训机构', d:'提交营业执照 → 对公资质核验 → 创建机构与讲师 → 发布课程', b:'立即入驻 ›'},
+    pharma:   {t:'🏢 药企入驻 · 制药企业 / MAH', d:'提交生产许可证 → GMP 资质核验 → 发布学术内容（专区展示 · 禁售药品）', b:'申请入驻 ›'}
+  };
+  var tabs = document.querySelectorAll('.jt');
+  function switchJoin(type){
+    var c = JOIN[type] || JOIN.person;
+    tabs.forEach(function(el){
+      el.classList.toggle('on', el.getAttribute('data-join') === type);
+    });
+    var t = document.getElementById('joinTitle'),
+        d = document.getElementById('joinDesc'),
+        b = document.getElementById('joinBtn'),
+        bn = document.getElementById('joinBanner');
+    if(t) t.textContent = c.t;
+    if(d) d.textContent = c.d;
+    if(b) b.textContent = c.b;
+    if(bn) bn.setAttribute('data-join', type);
+  }
+  tabs.forEach(function(el){
+    el.addEventListener('click', function(){ switchJoin(el.getAttribute('data-join')); });
+  });
+  // 金刚区「我要入驻」入口点击后滚动到入驻模块并默认选中个人
+  document.querySelectorAll('.jg-join').forEach(function(el){
+    el.addEventListener('click', function(){
+      switchJoin('person');
+      var jt = document.querySelector('.join-tabs');
+      if(jt) jt.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+  });
+  window.switchJoin = switchJoin;
+})();
+/* 底部 tab 点击跳转到对应页面（首页 / 学习 / 我的） */
+(function(){
+  // tab 文本含 emoji 图标（如 "▶学习"），用包含匹配而非精确相等
+  var MAP = [['首页','home'], ['学习','learn'], ['我的','mine']];
+  document.querySelectorAll('.app-tabbar .tb').forEach(function(tb){
+    tb.style.cursor='pointer';
+    tb.addEventListener('click', function(){
+      var label = (tb.textContent||'').trim();
+      var target = null;
+      for(var i=0;i<MAP.length;i++){
+        if(label.indexOf(MAP[i][0]) > -1){ target = MAP[i][1]; break; }
+      }
+      if(!target) return;
+      var sw = document.querySelector('.switcher .sw[data-pg="'+target+'"]');
+      if(sw) sw.click();
+    });
+  });
+})();
+</script>
+
+<script>
+/* ===== 三类主体注册页交互（APP-05-02 / 5.4.6） ===== */
+(function(){
+  var BTN = {person:'提交个人入驻申请', merchant:'提交商家入驻申请', pharma:'提交药企入驻申请'};
+  var rts = document.querySelectorAll('.rt');
+  var forms = document.querySelectorAll('.rf[data-f]');
+  function switchReg(type){
+    rts.forEach(function(el){ el.classList.toggle('on', el.getAttribute('data-type')===type); });
+    forms.forEach(function(el){ el.classList.toggle('on', el.getAttribute('data-f')===type); });
+    var btn = document.getElementById('regSubmit');
+    if(btn) btn.textContent = BTN[type] || BTN.person;
+    // 切回表单态
+    var body = document.querySelector('#register .reg-body');
+    var ok = document.getElementById('regOk');
+    if(body) body.style.display='';
+    if(ok) ok.classList.remove('on');
+  }
+  rts.forEach(function(el){
+    el.addEventListener('click', function(){ switchReg(el.getAttribute('data-type')); });
+  });
+  // 擅长领域/内容方向 多选
+  document.querySelectorAll('.chips span').forEach(function(c){
+    c.addEventListener('click', function(){ c.classList.toggle('on'); });
+  });
+  // 提交 → 成功态
+  var btn = document.getElementById('regSubmit');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var body = document.querySelector('#register .reg-body');
+      var ok = document.getElementById('regOk');
+      if(body) body.style.display='none';
+      if(ok) ok.classList.add('on');
+      var scr = document.querySelector('#register .app-screen');
+      if(scr) scr.scrollTop = 0;
+    });
+  }
+  window.switchReg = switchReg;
+})();
+
+/* 入驻入口（金刚区 + banner 按钮）→ 跳转注册页并同步主体类型 */
+(function(){
+  function gotoReg(type){
+    var sw = document.querySelector('.switcher .sw[data-pg="register"]');
+    if(sw) sw.click();
+    setTimeout(function(){
+      if(window.switchReg) window.switchReg(type || 'person');
+    }, 60);
+  }
+  document.querySelectorAll('.jg-join').forEach(function(el){
+    el.addEventListener('click', function(e){ e.stopPropagation(); gotoReg('person'); });
+  });
+  var jb = document.getElementById('joinBtn');
+  if(jb){
+    jb.style.cursor='pointer';
+    jb.addEventListener('click', function(){
+      var bn = document.getElementById('joinBanner');
+      gotoReg(bn ? bn.getAttribute('data-join') : 'person');
+    });
+  }
+  // 首页入驻 tab 点击 → 跳转注册页对应类型
+  document.querySelectorAll('.jt').forEach(function(el){
+    el.addEventListener('click', function(){
+      // 仅更新首页 banner 文案，不自动跳转，避免误触
+    });
+  });
+})();
+</script>
+</body>
+</html>
