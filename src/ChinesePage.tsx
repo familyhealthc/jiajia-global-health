@@ -18,6 +18,7 @@ import {
 import { StrategyGlobe } from './StrategyGlobe';
 import { rateByCode } from './marketRates';
 import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
+import { MarketIntelligence } from './MarketIntelligence';
 
 const markets = [
   {
@@ -96,6 +97,54 @@ const markets = [
     proof: ['欧盟合规', '德语内容', '持牌药房伙伴'],
     facts: { tax: 'VAT 标准税率 19%；部分商品适用 7%；公司所得税及地方营业税另计', population: '8,349 万', gdp: '5.05 万亿美元', fx: '1 USD ≈ 0.87 EUR', language: '德语 · 英语用于商务', logistics: '欧洲陆运与包裹网络成熟；跨境药品配送受目的地法规约束' },
   },
+  {
+    name: '日本', phase: '后续研究 · 未纳入18个月承诺', code: 'JP', model: 'E2C + 持牌渠道 B2B', role: '东北亚高标准准入市场',
+    detail: '优先寻找日本持牌合作方，研究医疗器械分类、药品销售和医疗机构设立的独立准入路径。',
+    proof: ['日语内容', '本地持牌主体', '器械分级审查'],
+    facts: { tax: '消费税标准税率 10%；企业税含国税与地方税，按主体和所在地核算', population: '1.234 亿', gdp: '4.44 万亿美元', fx: '1 USD ≈ 157.18 JPY', language: '日语', logistics: '东京 / 大阪航空和港口网络成熟；药械进口及温控单独核验' },
+  },
+  {
+    name: '韩国', phase: '后续研究 · 未纳入18个月承诺', code: 'KR', model: 'E2C + B2B 合作', role: '东北亚数字健康观察市场',
+    detail: '先验证韩语内容、MFDS 产品准入和当地持牌流通伙伴；不把一般电商能力等同于药品线上销售许可。',
+    proof: ['韩语运营', 'MFDS 准入', '持牌药房合作'],
+    facts: { tax: 'VAT 标准税率 10%；企业所得税分档及地方附加税按主体核验', population: '5,168 万', gdp: '1.87 万亿美元', fx: '1 USD ≈ 1,356.15 KRW', language: '韩语', logistics: '首尔及仁川空港网络高效；药械进口与本地配送单独审查' },
+  },
+  {
+    name: '菲律宾', phase: '后续研究 · 未纳入18个月承诺', code: 'PH', model: 'B2B + 本地合作 B2C', role: '东南亚群岛型医疗市场',
+    detail: '围绕 FDA 药店与器械零售营业许可、卫生部医疗设施许可和群岛配送成本做可行性验证。',
+    proof: ['FDA 营业许可', '卫生部设施许可', '群岛履约'],
+    facts: { tax: 'VAT 标准税率 12%；公司所得税与平台代扣规则按实体和交易核验', population: '1.168 亿', gdp: '4,871 亿美元', fx: '1 USD ≈ 62.46 PHP', language: '菲律宾语 · 英语', logistics: '马尼拉为主要入口，跨岛配送、温控和偏远地区时效需单独核算' },
+  },
+  {
+    name: '澳大利亚', phase: '后续研究 · 未纳入18个月承诺', code: 'AU', model: 'E2C + 合规器械 B2B', role: '高监管透明度市场',
+    detail: '医疗器械通常需要澳洲本地 sponsor 与 ARTG 登记；药房所有权和医疗机构审批还需看州或领地。',
+    proof: ['本地 sponsor', 'ARTG 路径', '州级牌照'],
+    facts: { tax: 'GST 标准税率 10%；公司税按企业资格通常 25% 或 30%，须按主体核验', population: '2,761 万', gdp: '1.80 万亿美元', fx: '1 USD ≈ 1.41 AUD', language: '英语 · 多语社群', logistics: '悉尼 / 墨尔本空运海运成熟；国内距离长，跨州和冷链成本需测算' },
+  },
+  {
+    name: '俄罗斯', phase: '后续研究 · 未纳入18个月承诺', code: 'RU', model: '审慎评估 B2B', role: '需优先做制裁与结算审查',
+    detail: '先核验药械注册、远程售药许可、制裁名单、支付银行和物流可行性；不以市场规模替代交易合规判断。',
+    proof: ['制裁筛查', '注册与许可', '支付物流可行性'],
+    facts: { tax: 'VAT 与利润税等按交易和主体核验；跨境支付与制裁合规优先', population: '1.435 亿', gdp: '2.56 万亿美元', fx: '1 USD ≈ 84.07 RUB', language: '俄语', logistics: '欧亚铁路和远东港口可评估；制裁、承运、保险、结算为先决条件' },
+  },
+  {
+    name: '加拿大', phase: '后续研究 · 未纳入18个月承诺', code: 'CA', model: 'E2C + 持牌渠道合作', role: '北美华人社群与健康需求市场',
+    detail: '先研究 Health Canada 产品许可，再按省或地区核查药房、诊所与医院的运营资格。',
+    proof: ['产品许可', '省级牌照', '双语与隐私'],
+    facts: { tax: '联邦公司税及省税叠加；GST/HST/PST 依省份与商品判断', population: '4,165 万', gdp: '2.32 万亿美元', fx: '1 USD ≈ 1.40 CAD', language: '英语 · 法语', logistics: '多伦多 / 温哥华航空港口入口；地域广，省际履约与冷链成本需核算' },
+  },
+  {
+    name: '英国', phase: '后续研究 · 未纳入18个月承诺', code: 'GB', model: 'E2C + 合规药房合作', role: '英语内容与欧洲周边合作点',
+    detail: '区分 MHRA 产品监管、GPhC 药房注册与医疗服务监管机构的设施登记，先以持牌合作验证需求。',
+    proof: ['MHRA 产品规则', '药房注册', '医疗服务登记'],
+    facts: { tax: 'VAT 标准税率 20%；公司税按利润与主体适用档位核验', population: '6,949 万', gdp: '4.00 万亿美元', fx: '1 USD ≈ 0.748 GBP', language: '英语', logistics: '伦敦航空与全国包裹网络成熟；药品和医疗产品跨境流通单独核验' },
+  },
+  {
+    name: '巴西', phase: '后续研究 · 未纳入18个月承诺', code: 'BR', model: 'B2B + 葡语 E2C', role: '拉美第二大复制观察点',
+    detail: '从墨西哥样板延伸研究，但须独立验证葡语本地化、ANVISA 产品及药店许可、州级税务和配送。',
+    proof: ['葡语内容', 'ANVISA 准入', '州际税务物流'],
+    facts: { tax: '税制改革过渡中；商品、州别和主体决定流转税及企业税，建模前逐项核验', population: '2.128 亿', gdp: '2.28 万亿美元', fx: '1 USD ≈ 5.12 BRL', language: '葡萄牙语', logistics: '圣保罗为主要集散地；国土广、州际税务及末端配送复杂' },
+  },
 ];
 
 const roadmap = [
@@ -155,7 +204,7 @@ export default function Home() {
         <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>08</span></div>
       </section>
 
-      <StrategyGlobe locale="zh" />
+      <StrategyGlobe locale="zh" onOpenMarket={(code) => setActiveMarket(Math.max(0, markets.findIndex((item) => item.code === code)))} />
 
       <section className="foundation-section" id="foundation">
         <div className="foundation-copy">
@@ -199,6 +248,7 @@ export default function Home() {
 
       <section className="markets-section" id="markets">
         <div className="section-topline"><div><div className="section-kicker">市场进入顺序</div><h2>香港起航，双样板验证，<br />沿区域节点复制。</h2></div><p>先在香港建立海外公司、投资与全球协同中枢，再用马来西亚和美国验证两类样板，逐步向东南亚、拉美和中东扩展。</p></div>
+        <p className="market-index-note">18 个市场 · 前 6 个为路线图内市场，其余为后续研究 <span>手机上横向滑动选择国家 →</span></p>
         <div className="market-workspace">
           <div className="market-list" role="tablist" aria-label="目标市场">
             {markets.map((item, index) => (
@@ -216,7 +266,8 @@ export default function Home() {
               {[['电商经营税', market.facts.tax], ['人口', market.facts.population], ['名义 GDP', market.facts.gdp], ['美元汇率', market.facts.fx], ['主要语言', market.facts.language], ['物流', market.facts.logistics]].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
               <div className="rate-fact"><span>基准利率 · 截至 {rateByCode[market.code].date}</span><strong>{rateByCode[market.code].value}</strong><small>{rateByCode[market.code].zh}</small><a href={rateByCode[market.code].source} target="_blank" rel="noopener noreferrer">央行／官方来源 ↗</a></div>
             </div>
-            <p className="market-source">人口与 GDP：<a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">世界银行最新可得口径</a>｜汇率：参考值，交易前重查｜利率：央行政策／基准口径，不等于企业贷款报价；新加坡以汇率为主要政策工具｜税负取决于主体、商品、渠道与收货地</p>
+            <p className="market-source">人口与 GDP：<a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">世界银行最新可得口径</a>｜新增市场美元汇率：<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer">ECB 2026-09-22 交叉汇率</a>，俄罗斯为<a href="https://www.cbr.ru/eng/currency_base/daily/?UniDbQuery.Posted=True&UniDbQuery.To=23.09.2026" target="_blank" rel="noopener noreferrer">俄央行官方汇率</a>；交易前重查｜利率不等于企业贷款报价｜税负取决于主体、商品、渠道与收货地</p>
+            <MarketIntelligence code={market.code} locale="zh" />
           </div>
         </div>
         <p className="node-note"><CircleDot size={15} /> 中国香港是家家健康第一个海外分公司和全球投资辐射起点；新加坡继续作为东南亚区域资源节点。</p>

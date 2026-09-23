@@ -9,4 +9,12 @@ export const rateByCode: Record<string, { zh: string; en: string; value: string;
   TH: { zh: '央行政策利率', en: 'BOT policy rate', value: '1.00%', date: '2026-08-26', source: 'https://www.bot.or.th/en/news-and-media/news/mpc/news-20260826-KsecaE98.html' },
   SA: { zh: '央行回购利率', en: 'SAMA repo rate', value: '4.50%', date: '2026-09-16', source: 'https://www.sama.gov.sa/en-us/MediaCenter/News/Pages/news-1169.aspx' },
   DE: { zh: '欧洲央行存款便利利率', en: 'ECB deposit facility rate', value: '2.50%', date: '2026-09-16', source: 'https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html' },
+  JP: { zh: '日本央行隔夜拆借目标；9月24日起升至 1.25%', en: 'BOJ overnight call target; 1.25% from Sep 24', value: '1.00%', date: '2026-09-23', source: 'https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k260918a.pdf' },
+  KR: { zh: '韩国央行基准利率', en: 'BOK Base Rate', value: '3.00%', date: '2026-08-27', source: 'https://www.bok.or.kr/eng/main/main.do' },
+  PH: { zh: '菲律宾央行逆回购目标利率', en: 'BSP reverse repurchase target', value: '5.00%', date: '2026-09-23', source: 'https://www.bsp.gov.ph/Statistics/sdds/sdds.aspx' },
+  AU: { zh: '澳洲联储现金利率目标', en: 'RBA cash rate target', value: '4.35%', date: '2026-09-22', source: 'https://www.rba.gov.au/cash-rate-target-overview.html' },
+  RU: { zh: '俄罗斯央行关键利率', en: 'Bank of Russia key rate', value: '14.00%', date: '2026-09-11', source: 'https://cbr.ru/eng/dkp/mp_dec/' },
+  CA: { zh: '加拿大央行隔夜目标利率', en: 'Bank of Canada overnight target', value: '2.25%', date: '2026-09-02', source: 'https://www.bankofcanada.ca/2026/09/fad-press-release-2026-09-02/' },
+  GB: { zh: '英格兰银行基准利率', en: 'Bank of England Bank Rate', value: '3.75%', date: '2026-09-17', source: 'https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates' },
+  BR: { zh: '巴西央行 Selic 目标利率', en: 'BCB Selic target', value: '13.75%', date: '2026-09-16', source: 'https://www.bcb.gov.br/en/pressdetail/2689/nota' },
 };

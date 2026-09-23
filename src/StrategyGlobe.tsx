@@ -32,6 +32,14 @@ const markets: Market[] = [
   { code: 'TH', name: { zh: '泰国', en: 'Thailand' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '东南亚本地渠道观察市场', en: 'Southeast Asia channel watchlist' }, model: 'B2B + LOCALISED E2C', coordinates: [100.5018, 13.7563], status: 'node' },
   { code: 'SA', name: { zh: '沙特阿拉伯', en: 'Saudi Arabia' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '海湾地区延伸市场', en: 'Gulf expansion watchlist' }, model: 'B2B INSTITUTIONAL', coordinates: [46.6753, 24.7136], status: 'node' },
   { code: 'DE', name: { zh: '德国', en: 'Germany' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '欧洲市场准入观察点', en: 'European market-entry watchlist' }, model: 'E2C + COMPLIANT SUPPLY', coordinates: [13.405, 52.52], status: 'node' },
+  { code: 'JP', name: { zh: '日本', en: 'Japan' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '东北亚高标准准入市场', en: 'Northeast Asia regulatory market' }, model: 'E2C + LICENSED B2B', coordinates: [139.6917, 35.6895], status: 'node' },
+  { code: 'KR', name: { zh: '韩国', en: 'South Korea' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '数字健康观察市场', en: 'Digital-health watchlist' }, model: 'E2C + B2B', coordinates: [126.978, 37.5665], status: 'node' },
+  { code: 'PH', name: { zh: '菲律宾', en: 'Philippines' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '群岛型医疗市场', en: 'Archipelago healthcare market' }, model: 'B2B + LOCAL B2C', coordinates: [120.9842, 14.5995], status: 'node' },
+  { code: 'AU', name: { zh: '澳大利亚', en: 'Australia' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '高标准医疗市场', en: 'High-standard healthcare market' }, model: 'E2C + COMPLIANT DEVICES', coordinates: [151.2093, -33.8688], status: 'node' },
+  { code: 'RU', name: { zh: '俄罗斯', en: 'Russia' }, phase: { zh: '后续研究 · 审慎评估', en: 'Research watchlist · Caution' }, role: { zh: '制裁与结算先行审查', en: 'Sanctions and settlement first' }, model: 'CAUTIOUS B2B REVIEW', coordinates: [37.6173, 55.7558], status: 'node' },
+  { code: 'CA', name: { zh: '加拿大', en: 'Canada' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '北美华人社群市场', en: 'North American Chinese-community market' }, model: 'E2C + LICENSED CHANNELS', coordinates: [-79.3832, 43.6532], status: 'node' },
+  { code: 'GB', name: { zh: '英国', en: 'United Kingdom' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '英语内容与机构合作点', en: 'English-language partnership market' }, model: 'E2C + LICENSED PARTNERS', coordinates: [-0.1276, 51.5072], status: 'node' },
+  { code: 'BR', name: { zh: '巴西', en: 'Brazil' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '拉美复制观察点', en: 'Latin America replication watchlist' }, model: 'B2B + PORTUGUESE E2C', coordinates: [-46.6333, -23.5505], status: 'node' },
 ];
 
 const labels = {
@@ -49,7 +57,7 @@ const labels = {
   },
 };
 
-export function StrategyGlobe({ locale = 'zh' }: { locale?: Locale }) {
+export function StrategyGlobe({ locale = 'zh', onOpenMarket }: { locale?: Locale; onOpenMarket?: (code: string) => void }) {
   const t = labels[locale];
   const [rotation, setRotation] = useState<[number, number]>([-hongKong[0], -hongKong[1]]);
   const [selected, setSelected] = useState('HK');
@@ -135,7 +143,7 @@ export function StrategyGlobe({ locale = 'zh' }: { locale?: Locale }) {
         <div className="globe-readout" aria-live="polite">
           <div className="readout-head"><span>{active.code}</span><div><small>{active.phase[locale]}</small><h3>{active.name[locale]}</h3></div></div>
           <dl><div><dt>{t.role}</dt><dd>{active.role[locale]}</dd></div><div><dt>{t.model}</dt><dd>{active.model}</dd></div></dl>
-          <a href="#markets">{t.open}<ArrowUpRight size={15}/></a>
+          <a href="#markets" onClick={() => onOpenMarket?.(active.code)}>{t.open}<ArrowUpRight size={15}/></a>
         </div>
         <span className="globe-coordinate" aria-hidden="true">{Math.abs(active.coordinates[1]).toFixed(2)}°{active.coordinates[1] >= 0 ? 'N' : 'S'} · {Math.abs(active.coordinates[0]).toFixed(2)}°{active.coordinates[0] >= 0 ? 'E' : 'W'}</span>
       </div>
