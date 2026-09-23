@@ -184,12 +184,24 @@ main[lang="en"] .market-workspace::before { content: "18 markets · First six in
 .market-facts > div { min-height: 126px; padding: 18px 18px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .market-facts span { display: block; margin-bottom: 11px; color: #8a7770; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
 .market-facts strong { display: block; color: #173f44; font-size: 14px; font-weight: 600; line-height: 1.55; }
-.market-facts .rate-fact { background: #eff8f5; }
-.rate-fact strong { font-family: Georgia, serif; font-size: 25px; }
-.rate-fact small { display: block; margin-top: 4px; color: #47676a; font-size: 11px; line-height: 1.5; }
-.rate-fact a, .market-source a { color: #116d76; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.rate-fact a { display: inline-block; margin-top: 10px; font-size: 11px; }
+.market-source a { color: #116d76; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .market-detail > .market-source { max-width: none; margin: 16px 0 0; color: #829194; font-size: 10px; line-height: 1.65; }
+.capital-rates { margin-top: 48px; padding-top: 24px; border-top: 2px solid #164f56; }
+.capital-rates-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 22px; }
+.capital-rates-head > div > span { color: #a17d47; font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.capital-rates-head h4 { margin: 8px 0 0; color: #16454c; font-family: Georgia, "Songti SC", serif; font-size: clamp(23px, 2.3vw, 32px); font-weight: 500; line-height: 1.35; }
+.capital-rates-head p { max-width: 300px; margin: 0 0 3px; color: #728488; font-size: 12px; line-height: 1.55; }
+.capital-rates-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.capital-rate { display: flex; flex-direction: column; align-items: flex-start; min-height: 196px; padding: 19px 17px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.capital-rate-label { min-height: 29px; color: #987341; font-size: 11px; font-weight: 700; line-height: 1.4; }
+.capital-rate strong { margin: 12px 0 6px; color: #164f56; font-family: Georgia, "Songti SC", serif; font-size: clamp(18px, 1.7vw, 25px); font-weight: 600; line-height: 1.25; }
+.capital-rate-name { min-height: 40px; color: #395d62; font-size: 12px; line-height: 1.55; }
+.capital-rate-meta { margin-top: auto; padding-top: 14px; color: #8a999c; font-size: 10px; line-height: 1.4; }
+.capital-rate a { margin-top: 5px; color: #147b84; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.capital-rates-note { margin: 15px 0 0; color: #395d62; font-size: 12px; line-height: 1.65; }
+.capital-rates-loan { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 23px; padding: 17px 19px; background: #eff7f5; color: #365c61; font-size: 12px; line-height: 1.7; }
+.capital-rates-loan b { color: #146068; font-size: 11px; letter-spacing: .06em; }
+.capital-rates-disclaimer { margin: 14px 0 0; color: #829194; font-size: 10px; line-height: 1.65; }
 .market-intelligence { margin-top: 52px; border-top: 2px solid #164f56; }
 .market-intelligence-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 21px 0 18px; }
 .market-intelligence-head span { color: #114d55; font-size: 19px; font-weight: 700; letter-spacing: .03em; }
@@ -390,6 +402,10 @@ main[lang="en"] .market-workspace::before { content: "18 markets · First six in
   .market-mapmark { width: 82px; height: 82px; right: 22px; top: 28px; }
   .market-detail h3 { max-width: calc(100% - 90px); }
   .market-facts { grid-template-columns: repeat(2, 1fr); }
+  .capital-rates-head { display: block; }
+  .capital-rates-head p { margin-top: 8px; }
+  .capital-rates-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .capital-rates-loan { grid-template-columns: 1fr; gap: 4px; }
   .market-intelligence-head { display: block; }
   .market-intelligence-head p { margin-top: 8px; }
   .intelligence-row { grid-template-columns: 1fr; gap: 7px; }

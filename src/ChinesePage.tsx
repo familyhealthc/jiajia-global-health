@@ -16,7 +16,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { StrategyGlobe } from './StrategyGlobe';
-import { rateByCode } from './marketRates';
+import { CapitalMarketRates } from './CapitalMarketRates';
 import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
 import { MarketIntelligence } from './MarketIntelligence';
 import { CriticalPathAlerts } from './CriticalPathAlerts';
@@ -265,9 +265,9 @@ export default function Home() {
             <div className="proof-list">{market.proof.map((item) => <span key={item}><Check size={14} />{item}</span>)}</div>
             <div className="market-facts" aria-label={`${market.name}市场数据`}>
               {[['电商经营税', market.facts.tax], ['人口', market.facts.population], ['名义 GDP', market.facts.gdp], ['美元汇率', market.facts.fx], ['主要语言', market.facts.language], ['物流', market.facts.logistics]].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
-              <div className="rate-fact"><span>基准利率 · 截至 {rateByCode[market.code].date}</span><strong>{rateByCode[market.code].value}</strong><small>{rateByCode[market.code].zh}</small><a href={rateByCode[market.code].source} target="_blank" rel="noopener noreferrer">央行／官方来源 ↗</a></div>
             </div>
-            <p className="market-source">人口与 GDP：<a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">世界银行最新可得口径</a>｜新增市场美元汇率：<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer">ECB 2026-09-22 交叉汇率</a>，俄罗斯为<a href="https://www.cbr.ru/eng/currency_base/daily/?UniDbQuery.Posted=True&UniDbQuery.To=23.09.2026" target="_blank" rel="noopener noreferrer">俄央行官方汇率</a>；交易前重查｜利率不等于企业贷款报价｜税负取决于主体、商品、渠道与收货地</p>
+            <p className="market-source">人口与 GDP：<a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">世界银行最新可得口径</a>｜新增市场美元汇率：<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer">ECB 2026-09-22 交叉汇率</a>，俄罗斯为<a href="https://www.cbr.ru/eng/currency_base/daily/?UniDbQuery.Posted=True&UniDbQuery.To=23.09.2026" target="_blank" rel="noopener noreferrer">俄央行官方汇率</a>；交易前重查｜税负取决于主体、商品、渠道与收货地</p>
+            <CapitalMarketRates code={market.code} locale="zh" />
             <MarketIntelligence code={market.code} locale="zh" />
           </div>
         </div>
