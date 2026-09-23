@@ -19,6 +19,7 @@ import { StrategyGlobe } from './StrategyGlobe';
 import { rateByCode } from './marketRates';
 import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
 import { MarketIntelligence } from './MarketIntelligence';
+import { CriticalPathAlerts } from './CriticalPathAlerts';
 
 const markets = [
   {
@@ -182,7 +183,7 @@ export default function Home() {
             <span className="brand-mark"><Network size={17} /></span><span>家家健康</span>
           </a>
           <div className="nav-links">
-            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a><a href="#pharmacy-guide">开店指南</a>
+            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a><a href="#alerts">审批预警</a><a href="#pharmacy-guide">开店指南</a>
           </div>
           <a className="nav-action" href="?lang=en">EN <ArrowUpRight size={15} /></a>
         </nav>
@@ -273,6 +274,7 @@ export default function Home() {
         <p className="node-note"><CircleDot size={15} /> 中国香港是家家健康第一个海外分公司和全球投资辐射起点；新加坡继续作为东南亚区域资源节点。</p>
       </section>
 
+      <CriticalPathAlerts locale="zh" />
       <PharmacyLaunchGuide locale="zh" />
 
       <section className="roadmap-section" id="roadmap">
