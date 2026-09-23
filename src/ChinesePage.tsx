@@ -16,6 +16,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { StrategyGlobe } from './StrategyGlobe';
+import { rateByCode } from './marketRates';
+import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
 
 const markets = [
   {
@@ -66,6 +68,34 @@ const markets = [
     proof: ['机构合作', '区域品牌节点', '国家模板复用'],
     facts: { tax: '公司税：应税利润 ≤ AED 375,000 为 0%，以上 9%；VAT 5%，本地企业强制注册门槛 AED 375,000', population: '1,099 万', gdp: '5,523 亿美元', fx: '1 USD = 3.6725 AED', language: '阿拉伯语 · 英语广泛使用', logistics: '杰贝阿里港 + 迪拜 / 阿布扎比空运；适合作为海湾转口枢纽' },
   },
+  {
+    name: '新加坡', phase: '区域资源节点 · 后续评估', code: 'SG',
+    model: 'E2C + B2B 合作', role: '东南亚资源连接点',
+    detail: '连接区域专家、医药品牌、机构和资本；开店或卖药仍需按新加坡药品分类、牌照和线上药房要求逐项核查。',
+    proof: ['区域合作', '持牌伙伴', '品类准入评估'],
+    facts: { tax: '企业所得税 17%；GST 标准税率 9%，注册、跨境和豁免规则依交易判断', population: '611 万', gdp: '6,039 亿美元', fx: '1 USD ≈ 1.27 SGD', language: '英语 · 中文 · 马来语 · 泰米尔语', logistics: '樟宜空港与港口枢纽；适合区域转运，药品另核温控与进口资格' },
+  },
+  {
+    name: '泰国', phase: '后续机会 · 待评估', code: 'TH',
+    model: 'B2B 合作 + 本地化 E2C', role: '东南亚本地渠道观察市场',
+    detail: '先研究药店牌照、产品注册和泰语内容规则，再判断是否建立本地合作与履约网络。',
+    proof: ['本地持牌伙伴', '泰语内容', '分销可行性'],
+    facts: { tax: '企业所得税标准税率 20%；VAT 当前 7%，适用范围与注册门槛须按交易核查', population: '7,162 万', gdp: '5,770 亿美元', fx: '1 USD ≈ 33.27 THB', language: '泰语 · 英语用于商务', logistics: '曼谷航空与港口集散；跨省配送及温控成本需单独测算' },
+  },
+  {
+    name: '沙特阿拉伯', phase: '后续机会 · 待评估', code: 'SA',
+    model: 'B2B 机构合作优先', role: '海湾地区延伸市场',
+    detail: '以阿联酋节点为基础研究机构需求、药品准入与本地配送，再决定是否建设本地零售能力。',
+    proof: ['机构需求', '产品注册', '本地履约'],
+    facts: { tax: 'VAT 标准税率 15%；公司税与天课取决于投资者结构和应税活动', population: '3,697 万', gdp: '1.28 万亿美元', fx: '1 USD = 3.75 SAR（官方汇率）', language: '阿拉伯语 · 英语用于商务', logistics: '利雅得、吉达、达曼分区布局；跨区域配送与进口清关需评估' },
+  },
+  {
+    name: '德国', phase: '后续机会 · 待评估', code: 'DE',
+    model: 'E2C 内容 + 合规供应合作', role: '欧洲市场准入观察点',
+    detail: '先研究欧盟与德国药品线上销售、药房登记、数据保护和德语内容要求，再评估欧洲布局。',
+    proof: ['欧盟合规', '德语内容', '持牌药房伙伴'],
+    facts: { tax: 'VAT 标准税率 19%；部分商品适用 7%；公司所得税及地方营业税另计', population: '8,349 万', gdp: '5.05 万亿美元', fx: '1 USD ≈ 0.87 EUR', language: '德语 · 英语用于商务', logistics: '欧洲陆运与包裹网络成熟；跨境药品配送受目的地法规约束' },
+  },
 ];
 
 const roadmap = [
@@ -103,7 +133,7 @@ export default function Home() {
             <span className="brand-mark"><Network size={17} /></span><span>家家健康</span>
           </a>
           <div className="nav-links">
-            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a>
+            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a><a href="#pharmacy-guide">开店指南</a>
           </div>
           <a className="nav-action" href="?lang=en">EN <ArrowUpRight size={15} /></a>
         </nav>
@@ -184,12 +214,15 @@ export default function Home() {
             <div className="proof-list">{market.proof.map((item) => <span key={item}><Check size={14} />{item}</span>)}</div>
             <div className="market-facts" aria-label={`${market.name}市场数据`}>
               {[['电商经营税', market.facts.tax], ['人口', market.facts.population], ['名义 GDP', market.facts.gdp], ['美元汇率', market.facts.fx], ['主要语言', market.facts.language], ['物流', market.facts.logistics]].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
+              <div className="rate-fact"><span>基准利率 · 截至 {rateByCode[market.code].date}</span><strong>{rateByCode[market.code].value}</strong><small>{rateByCode[market.code].zh}</small><a href={rateByCode[market.code].source} target="_blank" rel="noopener noreferrer">央行／官方来源 ↗</a></div>
             </div>
-            <p className="market-source">人口与 GDP：世界银行最新可得口径｜汇率：当前参考值｜电商税务：当地税务机关公开口径；最终税负取决于公司主体、商品归类、卖家所在地、销售渠道与收货地址</p>
+            <p className="market-source">人口与 GDP：<a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">世界银行最新可得口径</a>｜汇率：参考值，交易前重查｜利率：央行政策／基准口径，不等于企业贷款报价；新加坡以汇率为主要政策工具｜税负取决于主体、商品、渠道与收货地</p>
           </div>
         </div>
         <p className="node-note"><CircleDot size={15} /> 中国香港是家家健康第一个海外分公司和全球投资辐射起点；新加坡继续作为东南亚区域资源节点。</p>
       </section>
+
+      <PharmacyLaunchGuide locale="zh" />
 
       <section className="roadmap-section" id="roadmap">
         <div className="section-topline dark"><div><div className="section-kicker light">18 个月路线图</div><h2>每一阶段，<br />都有一个清晰决策门。</h2></div><p>阶段验收不是按“做了多少功能”，而是按平台能否跑通、闭环并复制来判断。</p></div>

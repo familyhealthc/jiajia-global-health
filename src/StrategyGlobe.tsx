@@ -29,6 +29,9 @@ const markets: Market[] = [
   { code: 'MX', name: { zh: '墨西哥', en: 'Mexico' }, phase: { zh: '第二批 · 7—12个月', en: 'Second wave · Months 7—12' }, role: { zh: '拉美复制样板', en: 'Latin America replication pilot' }, model: 'B2B + B2C + E2C', coordinates: [-99.1332, 19.4326], status: 'next' },
   { code: 'AE', name: { zh: '阿联酋', en: 'United Arab Emirates' }, phase: { zh: '复制期 · 13—18个月', en: 'Replication · Months 13—18' }, role: { zh: '中东资源与业务节点', en: 'Middle East business node' }, model: 'B2B / E2C → B2C', coordinates: [54.3773, 24.4539], status: 'next' },
   { code: 'SG', name: { zh: '新加坡', en: 'Singapore' }, phase: { zh: '区域资源节点', en: 'Regional resource node' }, role: { zh: '连接专家、品牌、机构与资本', en: 'Experts, brands, institutions & capital' }, model: 'REGIONAL NETWORK NODE', coordinates: [103.8198, 1.3521], status: 'node' },
+  { code: 'TH', name: { zh: '泰国', en: 'Thailand' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '东南亚本地渠道观察市场', en: 'Southeast Asia channel watchlist' }, model: 'B2B + LOCALISED E2C', coordinates: [100.5018, 13.7563], status: 'node' },
+  { code: 'SA', name: { zh: '沙特阿拉伯', en: 'Saudi Arabia' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '海湾地区延伸市场', en: 'Gulf expansion watchlist' }, model: 'B2B INSTITUTIONAL', coordinates: [46.6753, 24.7136], status: 'node' },
+  { code: 'DE', name: { zh: '德国', en: 'Germany' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '欧洲市场准入观察点', en: 'European market-entry watchlist' }, model: 'E2C + COMPLIANT SUPPLY', coordinates: [13.405, 52.52], status: 'node' },
 ];
 
 const labels = {
