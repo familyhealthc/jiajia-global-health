@@ -6,6 +6,7 @@ import { feature } from 'topojson-client';
 import type { GeometryCollection, Topology } from 'topojson-specification';
 import world from 'world-atlas/countries-110m.json';
 import { ArrowUpRight, Hand, MousePointer2, Radio } from 'lucide-react';
+import { europeanMarkets } from './europeMarkets';
 
 type Locale = 'zh' | 'en';
 
@@ -32,6 +33,7 @@ const markets: Market[] = [
   { code: 'TH', name: { zh: '泰国', en: 'Thailand' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '东南亚本地渠道观察市场', en: 'Southeast Asia channel watchlist' }, model: 'B2B + LOCALISED E2C', coordinates: [100.5018, 13.7563], status: 'node' },
   { code: 'SA', name: { zh: '沙特阿拉伯', en: 'Saudi Arabia' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '海湾地区延伸市场', en: 'Gulf expansion watchlist' }, model: 'B2B INSTITUTIONAL', coordinates: [46.6753, 24.7136], status: 'node' },
   { code: 'DE', name: { zh: '德国', en: 'Germany' }, phase: { zh: '后续机会 · 待评估', en: 'Future opportunity · Under review' }, role: { zh: '欧洲市场准入观察点', en: 'European market-entry watchlist' }, model: 'E2C + COMPLIANT SUPPLY', coordinates: [13.405, 52.52], status: 'node' },
+  ...europeanMarkets.map((market) => ({ code: market.code, name: market.name, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: market.role, model: market.model.en, coordinates: market.coordinates, status: 'node' as const })),
   { code: 'JP', name: { zh: '日本', en: 'Japan' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '东北亚高标准准入市场', en: 'Northeast Asia regulatory market' }, model: 'E2C + LICENSED B2B', coordinates: [139.6917, 35.6895], status: 'node' },
   { code: 'KR', name: { zh: '韩国', en: 'South Korea' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '数字健康观察市场', en: 'Digital-health watchlist' }, model: 'E2C + B2B', coordinates: [126.978, 37.5665], status: 'node' },
   { code: 'PH', name: { zh: '菲律宾', en: 'Philippines' }, phase: { zh: '后续研究 · 待评估', en: 'Research watchlist' }, role: { zh: '群岛型医疗市场', en: 'Archipelago healthcare market' }, model: 'B2B + LOCAL B2C', coordinates: [120.9842, 14.5995], status: 'node' },
@@ -136,7 +138,7 @@ export function StrategyGlobe({ locale = 'zh', onOpenMarket }: { locale?: Locale
             const visible = point && geoDistance(market.coordinates, center) < Math.PI / 2;
             if (!point || !visible) return null;
             return <g key={market.code} className={`globe-marker ${market.status} ${selected === market.code ? 'selected' : ''}`} transform={`translate(${point[0]},${point[1]})`} onPointerDown={(event) => { event.stopPropagation(); setSelected(market.code); }} aria-hidden="true">
-              <circle className="marker-pulse" r="20" /><circle className="marker-dot" r="6" /><text x="12" y="-11">{market.code}</text>
+              <circle className="marker-pulse" r="20" /><circle className="marker-dot" r="6" />{(selected === market.code || !europeanMarkets.some((candidate) => candidate.code === market.code)) && <text x="12" y="-11">{market.code}</text>}
             </g>;
           })}
         </svg>

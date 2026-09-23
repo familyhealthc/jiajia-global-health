@@ -1,3 +1,5 @@
+import { europeanIntelligence } from './europeMarkets';
+
 type Bi = { zh: string; en: string };
 type Intelligence = {
   community?: { value: Bi; basis: Bi; source: string };
@@ -116,7 +118,7 @@ const data: Record<string, Intelligence> = {
 };
 
 export function MarketIntelligence({ code, locale }: { code: string; locale: 'zh' | 'en' }) {
-  const item = data[code];
+  const item = data[code] ?? europeanIntelligence[code];
   if (!item) return null;
   const isZh = locale === 'zh';
   const community = item.community;

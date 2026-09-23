@@ -20,6 +20,7 @@ import { CapitalMarketRates } from './CapitalMarketRates';
 import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
 import { MarketIntelligence } from './MarketIntelligence';
 import { CriticalPathAlerts } from './CriticalPathAlerts';
+import { europeanMarkets } from './europeMarkets';
 
 const markets = [
   {
@@ -98,6 +99,7 @@ const markets = [
     proof: ['欧盟合规', '德语内容', '持牌药房伙伴'],
     facts: { tax: 'VAT 标准税率 19%；部分商品适用 7%；公司所得税及地方营业税另计', population: '8,349 万', gdp: '5.05 万亿美元', fx: '1 USD ≈ 0.87 EUR', language: '德语 · 英语用于商务', logistics: '欧洲陆运与包裹网络成熟；跨境药品配送受目的地法规约束' },
   },
+  ...europeanMarkets.map((item) => ({ name: item.name.zh, phase: '欧洲研究 · 未纳入18个月承诺', code: item.code, model: item.model.zh, role: item.role.zh, detail: item.detail.zh, proof: item.proof.zh, facts: item.facts.zh })),
   {
     name: '日本', phase: '后续研究 · 未纳入18个月承诺', code: 'JP', model: 'E2C + 持牌渠道 B2B', role: '东北亚高标准准入市场',
     detail: '优先寻找日本持牌合作方，研究医疗器械分类、药品销售和医疗机构设立的独立准入路径。',
@@ -249,7 +251,7 @@ export default function Home() {
 
       <section className="markets-section" id="markets">
         <div className="section-topline"><div><div className="section-kicker">市场进入顺序</div><h2>香港起航，双样板验证，<br />沿区域节点复制。</h2></div><p>先在香港建立海外公司、投资与全球协同中枢，再用马来西亚和美国验证两类样板，逐步向东南亚、拉美和中东扩展。</p></div>
-        <p className="market-index-note">18 个市场 · 前 6 个为路线图内市场，其余为后续研究 <span>手机上横向滑动选择国家 →</span></p>
+        <p className="market-index-note">{markets.length} 个市场 · 欧洲 10 个 · 前 6 个为路线图内市场，其余为后续研究 <span>手机上横向滑动选择国家 →</span></p>
         <div className="market-workspace">
           <div className="market-list" role="tablist" aria-label="目标市场">
             {markets.map((item, index) => (
