@@ -1,4 +1,5 @@
 import { europeanIntelligence } from './europeMarkets';
+import { ListedPeers } from './ListedPeers';
 
 type Bi = { zh: string; en: string };
 type Intelligence = {
@@ -131,5 +132,6 @@ export function MarketIntelligence({ code, locale }: { code: string; locale: 'zh
       <div className="intelligence-row"><h4>{isZh ? '营商落地条件' : 'Doing-business conditions'}</h4><div><p>{item.business[locale]}</p></div></div>
     </div>
     <p className="intelligence-caveat">{isZh ? '统计口径各异，不宜横向相加或直接排名；“准入复杂度”是本页初步研究判断，实际审批取决于产品风险等级、经营主体、设施位置、服务范围和执业人员，投资前须由当地专业顾问复核。' : 'Census definitions differ and cannot be ranked directly. Access complexity is our preliminary assessment; actual approvals depend on device risk, entity, premises, services and professionals. Obtain local legal and regulatory review before investment.'}</p>
+    <ListedPeers code={code} locale={locale} />
   </section>;
 }
