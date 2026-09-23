@@ -186,7 +186,7 @@ export default function Home() {
             <span className="brand-mark"><Network size={17} /></span><span>家家健康</span>
           </a>
           <div className="nav-links">
-            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a><a href="#alerts">审批预警</a><a href="#pharmacy-guide">开店指南</a>
+            <a href="#top">S2B2C</a><a href="#globe">全球地球</a><a href="#foundation">产品底座</a><a href="#markets">市场进入</a><a href={`${import.meta.env.BASE_URL}economy/`}>经济与利率</a><a href="#alerts">审批预警</a><a href="#pharmacy-guide">开店指南</a>
           </div>
           <a className="nav-action" href="?lang=en">EN <ArrowUpRight size={15} /></a>
         </nav>
@@ -253,6 +253,7 @@ export default function Home() {
 
       <section className="markets-section" id="markets">
         <div className="section-topline"><div><div className="section-kicker">市场进入顺序</div><h2>香港起航，双样板验证，<br />沿区域节点复制。</h2></div><p>先在香港建立海外公司、投资与全球协同中枢，再用马来西亚和美国验证两类样板，逐步向东南亚、拉美和中东扩展。</p></div>
+        <a className="market-economy-link" href={`${import.meta.env.BASE_URL}economy/`}>国家经济观察：国债曲线、财政债务与外部风险 <ArrowUpRight size={16}/></a>
         <p className="market-index-note">{markets.length} 个市场 · 欧洲 10 个 · 前 6 个为路线图内市场，其余为后续研究 <span>手机上横向滑动选择国家 →</span></p>
         <div className="market-workspace">
           <div className="market-list" role="tablist" aria-label="目标市场">

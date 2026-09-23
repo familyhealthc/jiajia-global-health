@@ -43,6 +43,8 @@ a { color: inherit; text-decoration: none; }
 .nav-links a:hover { color: white; }
 .nav-links a:hover:after { transform: scaleX(1); }
 .nav-action { justify-self: end; display: flex; align-items: center; gap: 8px; color: var(--gold); font-size: 14px; }
+.market-economy-link { display: inline-flex; align-items: center; gap: 9px; margin: 26px 0 8px; color: #0c6f79; font-size: 14px; font-weight: 700; }
+.market-economy-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .hero-content { position: relative; z-index: 2; width: min(760px, calc(100% - 48px)); margin-left: clamp(24px, 8vw, 128px); padding-top: clamp(64px, 9vh, 100px); padding-bottom: 92px; animation: hero-enter 1s .15s cubic-bezier(.2,.8,.2,1) both; }
 .eyebrow, .section-kicker { display: flex; align-items: center; gap: 9px; text-transform: uppercase; letter-spacing: .18em; font-size: 12px; font-weight: 700; }
 .eyebrow { width: min(620px, 100%); justify-content: center; color: #ffe096; }
