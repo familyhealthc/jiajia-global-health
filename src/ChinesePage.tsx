@@ -20,6 +20,7 @@ import { CapitalMarketRates } from './CapitalMarketRates';
 import { PharmacyLaunchGuide } from './PharmacyLaunchGuide';
 import { MarketIntelligence } from './MarketIntelligence';
 import { CriticalPathAlerts } from './CriticalPathAlerts';
+import { ExecutionWorkbench } from './ExecutionWorkbench';
 import { europeanMarkets } from './europeMarkets';
 
 const markets = [
@@ -202,6 +203,7 @@ export default function Home() {
           <div className="hero-actions">
             <a className="primary-action" href="#globe">查看全球布局 <ArrowDown size={16} /></a>
             <span className="hero-note">中国香港起航<br />投资并辐射全球</span>
+            <a className="execution-hero-link" href="#execution">直接看执行清单 <ArrowUpRight size={15}/></a>
           </div>
         </div>
         <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>08</span></div>
@@ -277,6 +279,7 @@ export default function Home() {
       </section>
 
       <CriticalPathAlerts locale="zh" />
+      <ExecutionWorkbench locale="zh" />
       <PharmacyLaunchGuide locale="zh" />
 
       <section className="roadmap-section" id="roadmap">
@@ -301,7 +304,7 @@ export default function Home() {
       <section className="operating-section" id="blueprint">
         <div className="section-topline"><div><div className="section-kicker">扩展版 · 经营仪表盘</div><h2>用四类指标，<br />管理平台飞轮。</h2></div><p>把战略结论转成可持续更新的经营口径，让每次市场扩张都有前置条件、过程信号与复盘依据。</p></div>
         <div className="kpi-grid">
-          {kpis.map(([title, detail], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{detail}</p><div className="kpi-bar"><i style={{ width: `${46 + index * 12}%` }} /></div></article>)}
+          {kpis.map(([title, detail], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{detail}</p><div className="kpi-empty">待接入真实经营数据 —</div></article>)}
         </div>
         <div className="governance-line"><b>统一治理底线</b><span>医学审核</span><span>商业披露</span><span>本地合规</span><span>数据可追溯</span><span>AI 人工复核</span></div>
       </section>
