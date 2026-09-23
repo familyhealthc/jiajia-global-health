@@ -1,5 +1,4 @@
 import { europeanIntelligence } from './europeMarkets';
-import { ListedPeers } from './ListedPeers';
 
 type Bi = { zh: string; en: string };
 type Intelligence = {
@@ -132,6 +131,13 @@ export function MarketIntelligence({ code, locale }: { code: string; locale: 'zh
       <div className="intelligence-row"><h4>{isZh ? '营商落地条件' : 'Doing-business conditions'}</h4><div><p>{item.business[locale]}</p></div></div>
     </div>
     <p className="intelligence-caveat">{isZh ? '统计口径各异，不宜横向相加或直接排名；“准入复杂度”是本页初步研究判断，实际审批取决于产品风险等级、经营主体、设施位置、服务范围和执业人员，投资前须由当地专业顾问复核。' : 'Census definitions differ and cannot be ranked directly. Access complexity is our preliminary assessment; actual approvals depend on device risk, entity, premises, services and professionals. Obtain local legal and regulatory review before investment.'}</p>
-    <ListedPeers code={code} locale={locale} />
+    {code === 'ID' && <aside className="market-visit" aria-label={isZh ? '印尼来访交流' : 'Indonesia visit and exchange'}>
+      <span className="market-visit-kicker">{isZh ? '家家健康 · 来访交流' : 'JIAJIA HEALTH · VISIT & EXCHANGE'}</span>
+      <h3>{isZh ? '从本地交流，走向可验证的印尼路径。' : 'A local conversation, then a testable Indonesia plan.'}</h3>
+      <p>{isZh ? '家家健康曾邀请印尼华裔总会前总主席、现任辅导主席黄德新先生来访交流。他介绍了总会扎根印尼、连接各行业华商的网络，以及当地医药医疗监管、市场准入、分销渠道和消费需求等值得先核实的问题。' : 'Jiajia Health hosted Huang Dexin (Teddy Sugianto), former chair and current advisory chair of INTI, for a discussion. He described the association’s Chinese-Indonesian business network and the local regulatory, market-access, distribution and consumer-demand questions worth testing first.'}</p>
+      <p>{isZh ? '交流中，他认为医疗器械、营养健康品和特色医疗服务值得研究，并欢迎具备产品与合规能力的中国健康企业通过本地网络了解印尼，再评估面向东盟的延展空间。这是市场观察与合作邀请，不等于已建立正式合作或已取得经营许可。' : 'In the discussion, he identified medical devices, nutrition and wellness products, and selected care services as areas to study. He welcomed capable Chinese health companies to learn through local networks before assessing wider ASEAN opportunities. This is a market perspective and invitation to explore—not a formal partnership or operating approval.'}</p>
+      <div className="market-visit-next"><strong>{isZh ? '落地前先做' : 'FIRST PRACTICAL STEPS'}</strong><span>{isZh ? '逐品类核准监管分类与本地持牌主体 → 验证分销及履约伙伴 → 小规模测试真实需求。' : 'Classify each product and identify the licensed local entity → validate distributors and fulfilment → pilot real demand.'}</span></div>
+      <small>{isZh ? '来访与交流内容由家家健康提供；' : 'Visit and discussion details supplied by Jiajia Health; '}<a href="https://www.shangbaoindonesia.com/read/2026/08/13/chinese-community-1786635071" target="_blank" rel="noopener noreferrer">{isZh ? '职务资料 ↗' : 'Role reference ↗'}</a></small>
+    </aside>}
   </section>;
 }

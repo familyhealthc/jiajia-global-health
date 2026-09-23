@@ -219,6 +219,15 @@ main[lang="en"] .market-workspace::before { content: "26 markets · 10 in Europe
 .intelligence-row dt { color: #997849; font-size: 11px; font-weight: 700; }
 .intelligence-row dd { margin: 4px 0 0; color: #466165; font-size: 12px; line-height: 1.6; }
 .intelligence-caveat { margin: 4px 0 0; padding: 14px 17px; background: #f3f8f7; color: #687e82; font-size: 11px; line-height: 1.7; }
+.market-visit { margin-top: 36px; padding: 31px 34px 24px; border-left: 3px solid #bf9553; background: #fcfaf5; }
+.market-visit-kicker { color: #9b753e; font-size: 10px; font-weight: 750; letter-spacing: .16em; }
+.market-visit h3 { margin: 10px 0 21px; color: #173e45; font: 500 clamp(25px, 2.5vw, 35px)/1.3 Georgia, 'Songti SC', serif; }
+.market-visit > p { margin: 0 0 12px; color: #476267; font-size: 13px; line-height: 1.9; }
+.market-visit-next { display: grid; grid-template-columns: 105px minmax(0, 1fr); gap: 20px; margin: 24px 0 17px; padding: 18px 0; border-top: 1px solid #e6dbca; border-bottom: 1px solid #e6dbca; }
+.market-visit-next strong { color: #9b753e; font-size: 11px; letter-spacing: .08em; }
+.market-visit-next span { color: #204f56; font-size: 12px; line-height: 1.7; }
+.market-visit small { color: #8b9694; font-size: 10px; line-height: 1.65; }
+.market-visit small a { color: #187883; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 1180px) and (min-width: 761px) { .market-list { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .node-note { display: flex; align-items: center; gap: 10px; margin: 26px 0 0; color: #65777a; font-size: 13px; }
 .node-note svg { color: #a77b35; }
@@ -412,6 +421,8 @@ main[lang="en"] .market-workspace::before { content: "26 markets · 10 in Europe
   .market-intelligence-head p { margin-top: 8px; }
   .intelligence-row { grid-template-columns: 1fr; gap: 7px; }
   .intelligence-row dl { grid-template-columns: 1fr; }
+  .market-visit { padding: 24px 21px 20px; }
+  .market-visit-next { grid-template-columns: 1fr; gap: 8px; }
   .roadmap-grid { grid-template-columns: 1fr; margin-top: 58px; }
   .roadmap-grid article { min-height: auto; padding: 28px 18px 26px; border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
   .roadmap-grid h3 { min-height: auto; margin: 36px 0 22px; font-size: 30px; }
