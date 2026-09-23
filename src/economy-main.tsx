@@ -7,5 +7,5 @@ import './macro.css';
 
 const locale = new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'zh';
 document.documentElement.lang = locale === 'en' ? 'en' : 'zh-CN';
-document.title = locale === 'en' ? 'Economy & Rates | Jiajia Health' : '经济与利率观察｜家家健康';
+document.title = locale === 'en' ? 'Country Macro Observatory | Jiajia Health' : '国家经济观察｜家家健康';
 createRoot(document.getElementById('root')!).render(<StrictMode><EconomyPage locale={locale} /></StrictMode>);

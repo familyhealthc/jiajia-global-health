@@ -12,7 +12,7 @@ const checks = [
 
 export function DataQuality({ locale }: { locale: Locale }) {
   const en = locale === 'en';
-  return <section className="macro-quality" aria-labelledby="quality-heading">
+  return <section className="macro-quality" id="data-quality" aria-labelledby="quality-heading">
     <div className="economy-section-title"><div><span>{en ? 'READ THE DATA' : '如何判断数字'}</span><h2 id="quality-heading">{en ? 'A number needs its footnotes' : '数字之外，还要看数据说明'}</h2></div><p>{en ? 'Official statistics are documented estimates or records. Their definitions and revisions determine what they can tell us.' : '官方数据可能是账本记录，也可能是统计估计。它能说明什么，取决于定义、覆盖范围和修订方式。'}</p></div>
     <div className="macro-quality-types"><div><span>{en ? 'DIRECT RECORD' : '直接记录'}</span><strong>{en ? 'Rates · issuance' : '政策利率 · 国债发行'}</strong><p>{en ? 'Usually observable directly; still check the instrument and boundary.' : '通常可以直接观察，仍须核对工具与统计边界。'}</p></div><div><span>{en ? 'ACCOUNTING RECORD' : '账本记录'}</span><strong>{en ? 'Reserves · formal debt' : '外汇储备 · 正式债务'}</strong><p>{en ? 'The headline can be correct while usable liquidity or contingent debt differs.' : '总额可能准确，可动用资金与或有负债仍需另查。'}</p></div><div><span>{en ? 'STATISTICAL ESTIMATE' : '统计估计'}</span><strong>{en ? 'GDP · CPI · current account' : 'GDP · CPI · 经常账户'}</strong><p>{en ? 'Surveys and models are revised as better information arrives.' : '使用调查和模型，取得更多信息后可能修订。'}</p></div></div>
     <div className="macro-quality-checks"><h3>{en ? 'Five questions for every comparison' : '跨国比较前，问五个问题'}</h3><ol>{checks.map((item) => <li key={item.n}><span>{item.n}</span><strong>{item[locale]}</strong><p>{en ? item.enText : item.zhText}</p></li>)}</ol></div>

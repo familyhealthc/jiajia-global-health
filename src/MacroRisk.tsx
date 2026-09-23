@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { macroCountries, macroSources } from './macroIndicators';
+import { MoreMacroData } from './MoreMacroData';
+import { WorldBankData } from './WorldBankData';
+import { MacroHistory } from './MacroHistory';
 
 type Locale = 'zh' | 'en';
 const fmt = (value: number) => `${value > 0 ? '+' : value < 0 ? '−' : ''}${Math.abs(value).toFixed(1)}%`;
@@ -33,6 +36,9 @@ export function MacroRisk({ locale }: { locale: Locale }) {
       {code === 'SG' && <p className="macro-country-note">{en ? 'Singapore is a clear example of why gross debt cannot stand alone: its Ministry of Finance says government financial assets exceed its debt, and most borrowing serves non-spending purposes.' : '新加坡是“不能只看总债务率”的典型：其财政部说明，政府金融资产超过债务，多数借款用于非财政支出用途。'} <a href="https://www.mof.gov.sg/policies/reserves/our-assets-and-liabilities/" target="_blank" rel="noopener noreferrer">{en ? 'Singapore MOF' : '新加坡财政部'} ↗</a></p>}
       {code === 'CN' && <p className="macro-country-note">{en ? 'China’s 2.65× figure is calculated as the inverse of the World Bank’s 2024 “short-term debt as % of total reserves” series. It uses reserves including gold and debt by original maturity.' : '中国的 2.65 倍由世界银行 2024 年“短期外债／总储备”倒算；总储备包含黄金，短债按原始期限统计，不能代替未来一年实际到期外币支付压力。'}</p>}
       <p className="macro-caveat">{en ? 'A dash means no recent, sufficiently comparable figure was incorporated here; it is not zero. WDI interest/revenue may use a different institutional boundary from WEO general-government debt. Do not rank countries by these numbers alone.' : '“—”表示本页尚未纳入近期且足够可比的数值，不代表零。世行利息／收入序列与 IMF 一般政府债务可能采用不同机构边界，不宜直接据此给国家排名。'}</p>
+      <MoreMacroData locale={locale} code={code} />
+      <WorldBankData locale={locale} code={code} />
+      <MacroHistory locale={locale} code={code} />
     </section>
 
     <section className="macro-mechanics" aria-labelledby="debt-heading"><div className="economy-section-title"><div><span>{en ? 'FLOW AND STOCK' : '流量与存量'}</span><h2 id="debt-heading">{en ? 'How a deficit becomes debt' : '财政赤字如何变成政府债务'}</h2></div><p>{en ? 'Change the assumptions. This is a simple accounting illustration, not a country forecast.' : '调整下面的数字，看看赤字与存量如何衔接。这里是会计示意，不是国家预测。'}</p></div><div className="macro-debt-layout"><div className="macro-debt-controls">{[
