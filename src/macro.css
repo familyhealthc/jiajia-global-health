@@ -139,3 +139,8 @@
 @media (max-width: 900px) { .macro-catalog-grid { gap: 0 18px; } .macro-catalog-grid summary strong { font-size: 18px; } }
 @media (max-width: 900px) { .macro-history-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .economy-quick-nav { gap: 12px 18px; padding: 18px 24px; } .economy-quick-nav span { width: 100%; } .macro-catalog { padding: 65px 24px; } .macro-catalog-toolbar { flex-wrap: wrap; } .macro-catalog-toolbar input { order: 3; width: 100%; } .macro-catalog-toolbar > span { margin-left: auto; } .macro-catalog-grid { grid-template-columns: 1fr; } .macro-catalog-grid summary { min-height: 69px; } .macro-catalog-grid ul { padding-left: 27px; } .macro-catalog-schema { grid-template-columns: 1fr; gap: 12px; } .macro-more-heading { align-items: start; flex-direction: column; } .macro-more-list { grid-template-columns: 1fr; } .macro-more-row strong { font-size: 22px; } .macro-history-grid { grid-template-columns: 1fr; } }
+.economy-many-scroll table { min-width: 1450px; }
+.economy-many-scroll tbody th { background: #fbfaf5; }
+.economy-many-scroll thead th:first-child { background: #fbfaf5; }
+.economy-many-scroll th, .economy-many-scroll td { padding: 18px 13px; white-space: nowrap; }
+.economy-many-scroll td { font-size: 19px; }
